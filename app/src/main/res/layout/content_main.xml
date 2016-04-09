@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<RelativeLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#cce5ff"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/activity_main_scrollView"
+        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:padding="50dp"
+        android:layout_width="300dp">
+        <Button
+            android:id="@+id/add_new_photo"
+            android:text="@string/addphotos"
+            android:padding="15dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            />
+
+    </ScrollView>
+
+    <GridView
+        android:id="@+id/activity_main_gridView"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_below="@id/activity_main_scrollView"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:numColumns="auto_fit">
+    </GridView>
+
+    </RelativeLayout>
+
+
+
+
+
+
