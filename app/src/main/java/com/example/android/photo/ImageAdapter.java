@@ -1,15 +1,12 @@
 package com.example.android.photo;
-
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
-import com.example.android.photo.R;
 
 public class ImageAdapter extends BaseAdapter {
     private static int max = 8;

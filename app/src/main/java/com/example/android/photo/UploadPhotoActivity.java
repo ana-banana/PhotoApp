@@ -20,6 +20,7 @@ public class UploadPhotoActivity extends Activity implements View.OnClickListene
     ImageView imageToUpload;
     Button uploadImage;
     EditText uploadImageName;
+    String uploasImageNameStr;
     PhotoInfo newPhoto;
     PhotoModel model;
 
@@ -52,7 +53,8 @@ public class UploadPhotoActivity extends Activity implements View.OnClickListene
                 break;
             case R.id.uploadImage:
                 Bitmap myPictureUploading = ((BitmapDrawable) imageToUpload.getDrawable()).getBitmap();
-                newPhoto = new PhotoInfo(myPictureUploading, uploadImageName);
+                uploasImageNameStr = uploadImageName.getText().toString();
+                newPhoto = new PhotoInfo(myPictureUploading, uploasImageNameStr);
                 model.addNewPhoto(newPhoto);
                 Intent intent = new Intent(UploadPhotoActivity.this, MainActivityGallery.class);
                 startActivity(intent);

@@ -1,34 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_gravity="center_vertical"
-    android:layout_margin="30dp"
+    android:id="@+id/rlay"
+    android:layout_margin="20dp"
     android:background="#cce5ff"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <ImageView
-        android:id="@+id/imageToView"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="25dp"
-        android:layout_marginBottom="10dp"
-        android:layout_width="250dp"
-        android:layout_height="250dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Image Description"
-        android:id="@+id/textViewImageDescription"
-        android:layout_gravity="center_horizontal" />
-
-    <RatingBar
-        android:layout_marginTop="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/ratingBarImage"
-        android:layout_gravity="center_horizontal" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -36,8 +14,60 @@
         android:layout_height="wrap_content"
         android:text="Back to Gallery"
         android:id="@+id/buttonBackToGallery"
-        android:layout_marginBottom="15dp"
+        android:layout_marginBottom="5dp"
         android:layout_gravity="center_horizontal" />
 
 
-</LinearLayout>
+    <ImageView
+        android:id="@+id/imageToView"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_above="@+id/textViewImageDescription"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Image Description"
+        android:id="@+id/textViewImageDescription"
+        android:layout_gravity="center_horizontal"
+        android:layout_above="@+id/ratingBarImage"
+        android:layout_centerHorizontal="true" />
+
+    <RatingBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ratingBarImage"
+        android:layout_gravity="center_horizontal"
+        android:numStars="6"
+        android:rating="1"
+        android:stepSize="0.5"
+        android:layout_above="@+id/buttonSubmitRating"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        android:id="@+id/buttonSubmitRating"
+        android:layout_gravity="center_horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:textSize="15dp"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+
+        android:id="@+id/textViewYourRating"
+        android:layout_below="@+id/buttonBackToGallery"
+        android:layout_alignLeft="@+id/ratingBarImage"
+        android:layout_alignStart="@+id/ratingBarImage" />
+
+
+</RelativeLayout>
