@@ -89,9 +89,13 @@ public class OnePhotoActivity extends Activity {
                     public void onClick(View v) {
                         text = "Submitted rating " + String.valueOf(ratePhoto.getRating());
                         Toast.makeText(OnePhotoActivity.this, text, Toast.LENGTH_SHORT).show();
+                        float oldRating = model.myPhotos[photoNumber].getPictureRating();
                         model.myPhotos[photoNumber].setRating(ratePhoto.getRating());
+                        float newRating = model.myPhotos[photoNumber].getPictureRating();
+                        model.resetRatedPhotos(photoNumber, oldRating, newRating);
                     }
                 }
+
         );
 
     }

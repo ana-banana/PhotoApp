@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/imageButtonToGallery"
         android:src="@drawable/tothegallerybutton"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="100dp"
         android:background="#cce5ff"
         android:layout_centerHorizontal="true" />
 
@@ -47,6 +47,7 @@
         android:layout_below="@+id/imageButtonRestartGallery"
         android:layout_alignLeft="@+id/imageButtonRestartGallery"
         android:layout_alignStart="@+id/imageButtonRestartGallery" />
+
 
 
 </RelativeLayout>
