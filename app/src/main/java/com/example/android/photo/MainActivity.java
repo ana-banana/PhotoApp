@@ -1,6 +1,5 @@
 package com.example.android.photo;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,9 +9,9 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.GridView;
+import android.widget.ImageButton;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,11 +38,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        def = BitmapFactory.decodeResource(getResources(), R.drawable.emptyphoto);
+        def = BitmapFactory.decodeResource(getResources(), R.drawable.emptyphotofaded);
         model = PhotoModel.getInstance();
         model.setDefaults(def); // default bitmap
 
-        Button startButton = (Button) findViewById(R.id.buttonStart);
+        ImageButton startButton = (ImageButton) findViewById(R.id.imageButtonToGallery);
         startButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -54,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
                 }
         );
 
-        Button resetButton = (Button) findViewById(R.id.buttonReset);
+        ImageButton resetButton = (ImageButton) findViewById(R.id.imageButtonRestartGallery);
         resetButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override

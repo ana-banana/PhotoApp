@@ -3,28 +3,50 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000"
+    android:background="#cce5ff"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button To Start"
-        android:id="@+id/buttonStart"
-        android:layout_gravity="center_horizontal"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="122dp" />
 
-    <Button
+    <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/reset_button"
-        android:id="@+id/buttonReset"
-        android:layout_gravity="center_horizontal"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="210dp" />
+        android:id="@+id/imageButtonToGallery"
+        android:src="@drawable/tothegallerybutton"
+        android:layout_marginTop="80dp"
+        android:background="#cce5ff"
+        android:layout_centerHorizontal="true" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageButtonRestartGallery"
+        android:src="@drawable/restartgallerybutton"
+        android:layout_marginTop="50dp"
+        android:background="#cce5ff"
+        android:layout_below="@+id/imageButtonToGallery"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Go to gallery"
+        android:textSize="20dp"
+        android:id="@+id/textView"
+        android:layout_below="@+id/imageButtonToGallery"
+        android:layout_alignLeft="@+id/imageButtonToGallery"
+        android:layout_alignStart="@+id/imageButtonToGallery" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Reset my gallery"
+        android:textSize="20dp"
+        android:id="@+id/textView2"
+        android:layout_below="@+id/imageButtonRestartGallery"
+        android:layout_alignLeft="@+id/imageButtonRestartGallery"
+        android:layout_alignStart="@+id/imageButtonRestartGallery" />
 
 
 </RelativeLayout>

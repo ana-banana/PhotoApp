@@ -24,6 +24,8 @@ public class UploadPhotoActivity extends Activity implements View.OnClickListene
     PhotoInfo newPhoto;
     PhotoModel model;
 
+    boolean cklicked = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,12 +54,15 @@ public class UploadPhotoActivity extends Activity implements View.OnClickListene
                 // "forResult" part allows to get back after you select an image
                 break;
             case R.id.uploadImage:
-                Bitmap myPictureUploading = ((BitmapDrawable) imageToUpload.getDrawable()).getBitmap();
-                uploasImageNameStr = uploadImageName.getText().toString();
-                newPhoto = new PhotoInfo(myPictureUploading, uploasImageNameStr);
-                model.addNewPhoto(newPhoto);
-                Intent intent = new Intent(UploadPhotoActivity.this, MainActivityGallery.class);
-                startActivity(intent);
+                if (!cklicked) {
+                    cklicked = true;
+                    Bitmap myPictureUploading = ((BitmapDrawable) imageToUpload.getDrawable()).getBitmap();
+                    uploasImageNameStr = uploadImageName.getText().toString();
+                    newPhoto = new PhotoInfo(myPictureUploading, uploasImageNameStr);
+                    model.addNewPhoto(newPhoto);
+                    Intent intent = new Intent(UploadPhotoActivity.this, MainActivityGallery.class);
+                    startActivity(intent);
+                }
                 break;
         }
     }
