@@ -1,6 +1,8 @@
 package com.example.android.photo;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -9,14 +11,37 @@ import android.widget.ImageView;
 
 import com.example.android.photo.R;
 
-/**
- * Created by andrey on 03/03/2016.
- */
 public class ImageAdapter extends BaseAdapter {
+    private static int max = 8;
     private Context mContext;
+    private static ImageAdapter mInstance;
+    private Bitmap[] mThumbIds = new Bitmap[max];
 
-    public ImageAdapter(Context c) {
+
+    public static ImageAdapter getInstance(Context c, PhotoModel model) {
+        if (mInstance != null) {
+            return mInstance;
+        } else {
+            mInstance = new ImageAdapter(c, model);
+            return mInstance;
+        }
+    }
+
+    public ImageAdapter(Context c, PhotoModel model) {
         mContext = c;
+        //this.def = def;
+        Bitmap[] update = model.getBitmaps();
+        for (int i = 0; i < max; i++) {
+            mThumbIds[i] = update[i];
+        }
+    }
+
+    // update array of bitmaps
+    public void updateBitmaps(PhotoModel model) {
+        Bitmap[] update = model.getBitmaps();
+        for (int i = 0; i < max; i++) {
+            mThumbIds[i] = update[i];
+        }
     }
 
     public int getCount() {
@@ -43,13 +68,14 @@ public class ImageAdapter extends BaseAdapter {
         } else {
             imageView = (ImageView) convertView;
         }
+        imageView.setImageBitmap(mThumbIds[position]);
 
-        imageView.setImageResource(mThumbIds[position]);
+       // imageView.setImageResource(mThumbIds[position]);
         return imageView;
     }
 
     // references to our images
-    private Integer[] mThumbIds = {
+    /*private Integer[] mThumbIds = {
             R.drawable.emptyphoto,
             R.drawable.emptyphoto,
             R.drawable.emptyphoto,
@@ -58,6 +84,8 @@ public class ImageAdapter extends BaseAdapter {
             R.drawable.emptyphoto,
             R.drawable.emptyphoto,
             R.drawable.emptyphoto
+    }; */
 
-    };
+
+
 }

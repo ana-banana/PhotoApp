@@ -1,6 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_gravity="center_vertical"
+    android:layout_margin="30dp"
+    android:background="#cce5ff"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imageToView"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="10dp"
+        android:layout_width="250dp"
+        android:layout_height="250dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Image Description"
+        android:id="@+id/textViewImageDescription"
+        android:layout_gravity="center_horizontal" />
+
+    <RatingBar
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ratingBarImage"
+        android:layout_gravity="center_horizontal" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Back to Gallery"
+        android:id="@+id/buttonBackToGallery"
+        android:layout_marginBottom="15dp"
+        android:layout_gravity="center_horizontal" />
+
 
 </LinearLayout>

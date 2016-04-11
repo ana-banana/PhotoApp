@@ -7,61 +7,33 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.widget.Toolbar;
-import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.params.HttpParams;
 
-import java.io.ByteArrayOutputStream;
-import java.net.HttpURLConnection;
-import java.util.ArrayList;
-
-/**
- * Created by andrey on 30/03/2016.
- */
 public class UploadPhotoActivity extends Activity implements View.OnClickListener {
 
     private static final int RESULT_LOAD_IMAGE = 1;
 
-    private static final String SERVER_ADDRESS = "http://shaishav-server.ddns.net:8080/anastasia/";
-
     ImageView imageToUpload;
     Button uploadImage;
     EditText uploadImageName;
+    PhotoInfo newPhoto;
+    PhotoModel model;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.upload_photo);
-     //   Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-     //   setSupportActionBar(toolbar);
-
-      // FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-      //  fab.setOnClickListener(new View.OnClickListener() {
-      //      @Override
-      //      public void onClick(View view) {
-      //          Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-      //                  .setAction("Action", null).show();
-      //      }
-
 
         imageToUpload = (ImageView) findViewById(R.id.imageToUpload);
         imageToUpload.setImageResource(R.drawable.emptyphoto);
         uploadImage = (Button) findViewById(R.id.uploadImage);
         uploadImageName = (EditText) findViewById(R.id.editTextUploadName);
+
+        model = PhotoModel.getInstance();
 
         imageToUpload.setOnClickListener(this);
         uploadImage.setOnClickListener(this);
@@ -80,22 +52,25 @@ public class UploadPhotoActivity extends Activity implements View.OnClickListene
                 break;
             case R.id.uploadImage:
                 Bitmap myPictureUploading = ((BitmapDrawable) imageToUpload.getDrawable()).getBitmap();
-
+                newPhoto = new PhotoInfo(myPictureUploading, uploadImageName);
+                model.addNewPhoto(newPhoto);
+                Intent intent = new Intent(UploadPhotoActivity.this, MainActivityGallery.class);
+                startActivity(intent);
                 break;
         }
     }
-/*
+
     // get called when a user has selected a picture from the gallery:
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         // to make sure it's the image we want and somethis was actually selected:
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null) {
-            Uri selectedImage = data.getData();
+            Uri selectedImage = data.getData(); // uniform resource identifier
             imageToUpload.setImageURI(selectedImage);
         }
     }
-
+/*
     private class UploadImage extends AsyncTask <Void, Void, Void> {
 
         Bitmap image;
