@@ -90,9 +90,22 @@ public class OnePhotoActivity extends Activity {
                         text = "Submitted rating " + String.valueOf(ratePhoto.getRating());
                         Toast.makeText(OnePhotoActivity.this, text, Toast.LENGTH_SHORT).show();
                         float oldRating = model.myPhotos[photoNumber].getPictureRating();
+
+                        String debug2 = "Old rating of picture: " + photoNumber + " is " + oldRating;
+                        Log.d("TAG", debug2);
+                        String debug4 = "Old position in indexes of picture: " + photoNumber + " is " + model.myPhotos[photoNumber].posIndexArray;
+                        Log.d("TAG", debug4);
+
                         model.myPhotos[photoNumber].setRating(ratePhoto.getRating());
                         float newRating = model.myPhotos[photoNumber].getPictureRating();
+
+                        String debug3 = "New rating of picture: " + photoNumber + " is " + newRating;
+                        Log.d("TAG", debug3);
+
                         model.resetRatedPhotos(photoNumber, oldRating, newRating);
+
+                        String debug5 = "New position in indexes of picture: " + photoNumber + " is " + model.myPhotos[photoNumber].posIndexArray;
+                        Log.d("TAG", debug5);
                     }
                 }
 
