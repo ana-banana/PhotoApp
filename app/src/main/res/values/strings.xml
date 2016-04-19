@@ -4,4 +4,6 @@
     <string name="uploadButton">Upload Me</string>
     <string name="addphotos">Add new photo</string>
     <string name="reset_button">Button To Reset</string>
+
+    <string name="section_format">Hello World from section: %1$d</string>
 </resources>

@@ -5,15 +5,21 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import java.util.Objects;
+
 
 public class UploadPhotoActivity extends Activity implements View.OnClickListener {
+
+    final static String TAG = "TEST";
 
     private static final int RESULT_LOAD_IMAGE = 1;
 
@@ -21,6 +27,9 @@ public class UploadPhotoActivity extends Activity implements View.OnClickListene
     Button uploadImage;
     EditText uploadImageName;
     String uploasImageNameStr;
+
+    String backToView;
+
     PhotoInfo newPhoto;
     PhotoModel model;
 
@@ -30,6 +39,10 @@ public class UploadPhotoActivity extends Activity implements View.OnClickListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.upload_photo);
+
+        Bundle extras = getIntent().getExtras();
+        backToView = extras.getString("Which View");
+        Log.d(TAG, backToView);
 
         imageToUpload = (ImageView) findViewById(R.id.imageToUpload);
         imageToUpload.setImageResource(R.drawable.emptyphoto);
@@ -60,8 +73,19 @@ public class UploadPhotoActivity extends Activity implements View.OnClickListene
                     uploasImageNameStr = uploadImageName.getText().toString();
                     newPhoto = new PhotoInfo(myPictureUploading, uploasImageNameStr);
                     model.addNewPhoto(newPhoto);
-                    Intent intent = new Intent(UploadPhotoActivity.this, MainActivityGallery.class);
-                    startActivity(intent);
+                    String status = "View is " + backToView;
+                    Log.d(TAG, status);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                        if (Objects.equals(backToView, "GalleryMode")) {
+                            Intent intent = new Intent(UploadPhotoActivity.this, MainActivityGalleryMode.class);
+                            startActivity(intent);
+                        } else {
+                            if (Objects.equals(backToView, "RatingMode")) {
+                                Intent intent = new Intent(UploadPhotoActivity.this, MainActivityRatingMode.class);
+                                startActivity(intent);
+                            }
+                        }
+                    }
                 }
                 break;
         }

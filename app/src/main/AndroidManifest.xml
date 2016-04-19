@@ -11,15 +11,23 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+
+
+
+        </activity>
+
+        <activity android:name=".MainActivityPhotos" android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
         </activity>
 
         <activity android:name=".UploadPhotoActivity"></activity>
-        <activity android:name=".MainActivityGallery"></activity>
+        <activity android:name=".MainActivityGalleryMode" android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+        <activity android:name=".GalleryViews"></activity>
+        <activity android:name=".MainActivityRatingMode" android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
         <activity android:name=".OnePhotoActivity"></activity>
 
     </application>

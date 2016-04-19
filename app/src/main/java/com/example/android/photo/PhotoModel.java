@@ -1,11 +1,11 @@
 package com.example.android.photo;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 
 public class PhotoModel {
 
     final static String TAG = "TEST";
-
     static PhotoModel mInstance;
     PhotoInfo def;
     int maxPhotos = 8;
@@ -33,22 +33,24 @@ public class PhotoModel {
         myPhotos = new PhotoInfo[maxPhotos];
         photosByRating = new PhotoInfo[maxPhotos];
         indexes = new int[maxPhotos];
+        //Bitmap defBitm = BitmapFactory.decodeResource(getResources(), R.drawable.emptyphotofaded);
+        //setDefaults(defBitm); // default bitmap
     }
 
     public void setDefaults (Bitmap defaultPic) {
-        uploadedPhotos = 0;
-        this.def = new PhotoInfo(defaultPic);
-        for (int i = 0; i < maxPhotos; i++) {
-            myPhotos[i] = new PhotoInfo(defaultPic);
-            photosByRating[i] = new PhotoInfo(defaultPic);
-            myPhotos[i].posIndexArray = i;
-            indexes[i] = i;
+        if (uploadedPhotos == 0) {
+            this.def = new PhotoInfo(defaultPic);
+            for (int i = 0; i < maxPhotos; i++) {
+                myPhotos[i] = new PhotoInfo(defaultPic);
+                photosByRating[i] = new PhotoInfo(defaultPic);
+                myPhotos[i].posIndexArray = i;
+                indexes[i] = i;
+            }
+            for (int i = 0; i < maxPhotos; i++) {
+                String debug5 = "default position in indexes of element: " + i + " is " + myPhotos[i].posIndexArray;
+                Log.d("TAG", debug5);
+            }
         }
-        for (int i = 0; i < maxPhotos; i++) {
-            String debug5 = "default position in indexes of element: " + i + " is " + myPhotos[i].posIndexArray;
-            Log.d("TAG", debug5);
-        }
-
     }
 
     public void addNewPhoto (PhotoInfo newPhoto) {
@@ -60,6 +62,22 @@ public class PhotoModel {
         uploadedPhotos++;
         String debug1 = "Uploaded photos: " + uploadedPhotos;
         Log.d("TAG", debug1);
+    }
+
+    public float[] getPictureRatings() {
+        if (byRating) {
+            float [] ratings = new float[maxPhotos];
+            for (int i = 0; i < maxPhotos; i++) {
+                ratings[i] = photosByRating[i].getPictureRating();
+            }
+            return ratings;
+        } else {
+            float[] ratings = new float[maxPhotos];
+            for (int i = 0; i < maxPhotos; i++) {
+                ratings[i] = myPhotos[i].getPictureRating();
+            }
+            return ratings;
+        }
     }
 
     public Bitmap[] getBitmaps() {
@@ -79,6 +97,9 @@ public class PhotoModel {
     }
 
     public void resetPhotoModel() {
+        if (uploadedPhotos != 0) {
+            uploadedPhotos = 0;
+        }
         setDefaults(def.getPictureBit());
     }
 

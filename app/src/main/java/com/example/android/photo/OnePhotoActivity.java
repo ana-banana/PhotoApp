@@ -36,7 +36,9 @@ public class OnePhotoActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.one_photo);
+
         Bundle extras = getIntent().getExtras();
         model = PhotoModel.getInstance();
         photoNumStr = extras.getString("Which Photo");
@@ -60,7 +62,7 @@ public class OnePhotoActivity extends Activity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(OnePhotoActivity.this, MainActivityGallery.class);
+                        Intent intent = new Intent(OnePhotoActivity.this, MainActivityGalleryMode.class);
                         startActivity(intent);
                     }
                 }
