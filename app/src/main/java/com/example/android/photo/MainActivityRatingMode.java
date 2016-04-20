@@ -1,20 +1,193 @@
 package com.example.android.photo;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
-import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ImageButton;
-import android.widget.ListView;
-import android.widget.Toast;
 
-import java.util.ArrayList;
+import java.util.Objects;
 
-public class MainActivityRatingMode extends AppCompatActivity implements AdapterView.OnItemClickListener {
+
+public class MainActivityRatingMode extends AppCompatActivity {
+
+    private SectionsPagerAdapter mSectionsPagerAdapter;
+    private ViewPager mViewPager;
+
+    String order;
+    String startOrder;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.main_activity_photos);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar_mag);
+        setSupportActionBar(toolbar);
+        // Create the adapter that will return a fragment for each of the three
+        // primary sections of the activity.
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+
+        // Set up the ViewPager with the sections adapter.
+        mViewPager = (ViewPager) findViewById(R.id.pager);
+        mViewPager.setAdapter(mSectionsPagerAdapter);
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(mViewPager);
+
+        tabLayout.getTabAt(0).setIcon(R.drawable.basedonupload);
+        tabLayout.getTabAt(1).setIcon(R.drawable.basedonrating);
+
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowHomeEnabled(false);
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setCustomView(R.layout.action_bar);
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+
+        Bundle extra = getIntent().getExtras();
+        startOrder = extra.getString("Based on");
+
+        ImageButton addNewPhotoButton = (ImageButton) findViewById(R.id.imageButtonAddPhoto);
+        addNewPhotoButton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(MainActivityRatingMode.this, UploadPhotoActivity.class);
+                        intent.putExtra("Which View", "GalleryMode");
+                        intent.putExtra("Based on", order);
+                        startActivity(intent);
+                    }
+                }
+        );
+
+       /* ImageButton ratedPhotoButton = (ImageButton) findViewById(R.id.imageButtonRating);
+        ratedPhotoButton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(MainActivityRatingMode.this, MainActivityRatingMode.class);
+                        startActivity(intent);
+                    }
+                }
+        ); */
+
+        ImageButton galleryViewButton = (ImageButton) findViewById(R.id.imageButtonGridView);
+        galleryViewButton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(MainActivityRatingMode.this, MainActivityGalleryMode.class); // change gallery views to MainActivityGalleryMode or comment it out
+                        intent.putExtra("Based on", "uploads");
+                        startActivity(intent);
+
+                    }
+                }
+        );
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+
+        public SectionsPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @TargetApi(Build.VERSION_CODES.KITKAT)
+        @Override
+        public Fragment getItem(int position) {
+            // getItem is called to instantiate the fragment for the given page.
+            // Return a PlaceholderFragment (defined as a static inner class below).
+            //return PlaceholderFragment.newInstance(position + 1);
+            Fragment fragment = null;
+            if (Objects.equals(startOrder, "upload")) {
+                startOrder = "none";
+                order = "upload";
+                fragment = new RatesUploadsFragment();
+            } else if (Objects.equals(startOrder, "rating")) {
+                startOrder = "none";
+                order = "rating";
+                fragment = new RatesRatingsFragment();
+            } else {
+                switch (position) {
+                    case 0:
+                        order = "upload";
+                        fragment = new RatesUploadsFragment();
+                        break;
+                    case 1:
+                        order = "rating";
+                        fragment = new RatesRatingsFragment();
+                        break;
+                }
+            }
+            return fragment;
+        }
+
+        @Override
+        public int getCount() {
+            // Show 2 total pages.
+            return 2;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+          /*  switch (position) {
+                case 0:
+                    return "Uploads";
+                case 1:
+                    return "Ratings";
+            } */
+            // return null to display only the icon
+            return null;
+        }
+
+    }
+}
+
+/*implements AdapterView.OnItemClickListener {
 
     final static String TAG = "TEST";
 
@@ -122,7 +295,7 @@ public class MainActivityRatingMode extends AppCompatActivity implements Adapter
                         startActivity(intent);
                     }
                 }
-        ); */
+        );
 
         ImageButton galleryViewButton = (ImageButton) findViewById(R.id.imageButtonGridView);
         galleryViewButton.setOnClickListener(
@@ -194,4 +367,5 @@ public class MainActivityRatingMode extends AppCompatActivity implements Adapter
 
 
 } */
+
 

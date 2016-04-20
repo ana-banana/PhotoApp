@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#cce5ff"
+    android:background="#7593b4"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
 
@@ -13,7 +13,7 @@
         android:id="@+id/imageButtonToGallery"
         android:src="@drawable/tothegallerybutton"
         android:layout_marginTop="100dp"
-        android:background="#cce5ff"
+        android:background="#7593b4"
         android:layout_centerHorizontal="true" />
 
     <ImageButton
@@ -22,7 +22,7 @@
         android:id="@+id/imageButtonRestartGallery"
         android:src="@drawable/restartgallerybutton"
         android:layout_marginTop="50dp"
-        android:background="#cce5ff"
+        android:background="#7593b4"
         android:layout_below="@+id/imageButtonToGallery"
         android:layout_centerHorizontal="true" />
 
@@ -32,6 +32,7 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Go to gallery"
         android:textSize="20dp"
+        android:textColor="#E6E6FA"
         android:id="@+id/textView"
         android:layout_below="@+id/imageButtonToGallery"
         android:layout_alignLeft="@+id/imageButtonToGallery"
@@ -43,6 +44,7 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Reset my gallery"
         android:textSize="20dp"
+        android:textColor="#E6E6FA"
         android:id="@+id/textView2"
         android:layout_below="@+id/imageButtonRestartGallery"
         android:layout_alignLeft="@+id/imageButtonRestartGallery"

@@ -15,15 +15,15 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class ImageRatingsAdapter extends ArrayAdapter<MainActivityRatingMode.RatedPhotosRow> {
+public class ImageRatingsAdapter extends ArrayAdapter<RatedPhotosRow> {
     private Context mContext;
     private static int max = 8;
     private static ImageRatingsAdapter mInstance;
 
     private Bitmap[] mThumbIds = new Bitmap[max];
-    private float[] mRatings = new float[max];
+    //private float[] mRatings = new float[max];
 
-    public static ImageRatingsAdapter getInstance(Context c, ArrayList<MainActivityRatingMode.RatedPhotosRow> ratedPhotosRow) {
+    public static ImageRatingsAdapter getInstance(Context c, ArrayList<RatedPhotosRow> ratedPhotosRow) {
         if (mInstance != null) {
             return mInstance;
         } else {
@@ -32,17 +32,9 @@ public class ImageRatingsAdapter extends ArrayAdapter<MainActivityRatingMode.Rat
         }
     }
 
-    public ImageRatingsAdapter (Context context, ArrayList<MainActivityRatingMode.RatedPhotosRow> ratedPhotosRow) {
+    public ImageRatingsAdapter (Context context, ArrayList<RatedPhotosRow> ratedPhotosRow) {
         super(context, 0, ratedPhotosRow);
         this.mContext = context;
-
-        //mContext = c;
-        //Bitmap[] update = model.getBitmaps();
-        //float[] updateRatings = model.getPictureRatings();
-        //for (int i = 0; i < max; i++) {
-        //    mThumbIds[i] = update[i];
-        //    mRatings[i] = updateRatings[i];
-        //}
     }
 
     // update array of bitmaps
@@ -57,7 +49,7 @@ public class ImageRatingsAdapter extends ArrayAdapter<MainActivityRatingMode.Rat
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        MainActivityRatingMode.RatedPhotosRow ratedPhotosRow = getItem(position);
+        RatedPhotosRow ratedPhotosRow = getItem(position);
         if (convertView == null) {
             LayoutInflater mInflater = (LayoutInflater) mContext.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
             convertView = mInflater.inflate(R.layout.ratings_single_row, parent, false);

@@ -1,16 +1,11 @@
 package com.example.android.photo;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.ViewGroup;
 
 /**
  * Created by andrey on 13/04/2016.
@@ -42,10 +37,10 @@ class MyAdapterSwipe extends FragmentPagerAdapter {
         Fragment fragment = null;
         switch (position) {
             case 0:
-                fragment = new FragmentA();
+                fragment = new GalleryUploadsFragment();
                 break;
             case 1:
-                fragment = new FragmentB();
+                fragment = new GalleryRatingsFragment();
                 break;
         }
         return fragment;

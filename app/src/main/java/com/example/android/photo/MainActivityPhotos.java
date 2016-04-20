@@ -21,25 +21,25 @@ import android.widget.ImageButton;
  */
 public class MainActivityPhotos extends AppCompatActivity {
 
-    private SectionsPagerAdapter mSectionsPagerAdapter;
-    private ViewPager mViewPager;
+    // private SectionsPagerAdapter mSectionsPagerAdapter;
+    //  private ViewPager mViewPager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.main_activity_photos);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar_mag);
-        setSupportActionBar(toolbar);
+        //     Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar_mag);
+        //     setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        //      mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.pager);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
+        //      mViewPager = (ViewPager) findViewById(R.id.pager);
+        //      mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+  /*      TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
@@ -122,7 +122,7 @@ public class MainActivityPhotos extends AppCompatActivity {
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+    /*public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -136,10 +136,10 @@ public class MainActivityPhotos extends AppCompatActivity {
             Fragment fragment = null;
             switch (position) {
                 case 0:
-                    fragment = new FragmentA();
+                    fragment = new GalleryUploadsFragment();
                     break;
                 case 1:
-                    fragment = new FragmentB();
+                    fragment = new GalleryRatingsFragment();
                     break;
             }
             return fragment;
@@ -147,22 +147,22 @@ public class MainActivityPhotos extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 3;
+            // Show 2 total pages.
+            return 2;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "SECTION BOOOOOOO";
+                    return "Uploads";
                 case 1:
-                    return "SECTION 2";
-                case 2:
-                    return "brrrrr";
+                    return "Ratings";
             }
             return null;
         }
 
+    }
+} */
     }
 }

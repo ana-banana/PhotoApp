@@ -16,8 +16,9 @@
         android:paddingTop="2dp"
         android:layout_height="300dp"
         android:numColumns="1"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true">
+        android:layout_below="@+id/textView4"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true">
     </ListView>
 
     <TextView
@@ -32,46 +33,23 @@
         android:paddingTop="19dp"
         android:paddingBottom="15dp"
         android:id="@+id/textView4"
-        android:layout_alignLeft="@+id/activity_main_ratings_listView"
-        android:layout_alignStart="@+id/activity_main_ratings_listView"
-        android:layout_alignRight="@+id/activity_main_ratings_listView"
-        android:layout_alignEnd="@+id/activity_main_ratings_listView"
         android:autoText="false"
         android:allowUndo="false"
         android:textColor="#7593b4"
         android:singleLine="false"
-        android:layout_above="@+id/activity_main_ratings_listView" />
+        android:layout_below="@+id/imageView4"
+        android:layout_alignLeft="@+id/activity_main_ratings_listView"
+        android:layout_alignStart="@+id/activity_main_ratings_listView"
+        android:layout_alignRight="@+id/activity_main_ratings_listView"
+        android:layout_alignEnd="@+id/activity_main_ratings_listView" />
 
-
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#7593b4"
-        android:id="@+id/imageButtonOrderRating"
-        android:src="@drawable/basedonrating"
-        android:layout_marginLeft="106dp"
-        android:layout_marginStart="106dp"
-        android:layout_alignTop="@+id/imageButtonOrderUpload"
-        android:layout_alignLeft="@+id/imageView4"
-        android:layout_alignStart="@+id/imageView4" />
-
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#7593b4"
-        android:id="@+id/imageButtonOrderUpload"
-        android:src="@drawable/basedonupload"
-        android:layout_marginBottom="6dp"
-        android:layout_above="@+id/imageView4"
-        android:layout_toRightOf="@+id/imageButtonOrderRating"
-        android:layout_toEndOf="@+id/imageButtonOrderRating" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/imageView4"
         android:src="@drawable/linerose"
-        android:layout_above="@+id/textView4"
+        android:layout_marginTop="30dp"
         android:layout_alignLeft="@+id/textView4"
         android:layout_alignStart="@+id/textView4" />
 

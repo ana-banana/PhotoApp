@@ -54,46 +54,56 @@ public class PhotoModel {
     }
 
     public void addNewPhoto (PhotoInfo newPhoto) {
-        int indexesPos = myPhotos[uploadedPhotos].posIndexArray;
-
-        myPhotos[uploadedPhotos] = newPhoto;
-        myPhotos[uploadedPhotos].posIndexArray = indexesPos;
-        photosByRating[uploadedPhotos] = newPhoto;
-        uploadedPhotos++;
-        String debug1 = "Uploaded photos: " + uploadedPhotos;
-        Log.d("TAG", debug1);
+            int indexesPos = myPhotos[uploadedPhotos].posIndexArray;
+            myPhotos[uploadedPhotos] = newPhoto;
+            myPhotos[uploadedPhotos].posIndexArray = indexesPos;
+            photosByRating[uploadedPhotos] = newPhoto;
+            uploadedPhotos++;
+            String debug1 = "Uploaded photos: " + uploadedPhotos;
+            Log.d("TAG", debug1);
     }
 
-    public float[] getPictureRatings() {
-        if (byRating) {
+    public float[] getPictureRatingsRating() {
+        for (int i = 0; i < maxPhotos; i++) {
+            photosByRating[i] = myPhotos[indexes[i]];
+        }
+
             float [] ratings = new float[maxPhotos];
             for (int i = 0; i < maxPhotos; i++) {
                 ratings[i] = photosByRating[i].getPictureRating();
             }
             return ratings;
-        } else {
+
+    }
+
+    public float[] getPictureRatingsUpload() {
+
             float[] ratings = new float[maxPhotos];
             for (int i = 0; i < maxPhotos; i++) {
                 ratings[i] = myPhotos[i].getPictureRating();
             }
             return ratings;
-        }
+
     }
 
-    public Bitmap[] getBitmaps() {
-        if (byRating) {
+    public Bitmap[] getBitmapsRating() {
+        for (int i = 0; i < maxPhotos; i++) {
+            photosByRating[i] = myPhotos[indexes[i]];
+        }
             Bitmap [] images = new Bitmap[maxPhotos];
             for (int i = 0; i < maxPhotos; i++) {
                 images[i] = photosByRating[i].getPictureBit();
             }
             return images;
-        } else {
+    }
+
+    public Bitmap[] getBitmapsUpload() {
+
             Bitmap[] images = new Bitmap[maxPhotos];
             for (int i = 0; i < maxPhotos; i++) {
                 images[i] = myPhotos[i].getPictureBit();
             }
             return images;
-        }
     }
 
     public void resetPhotoModel() {

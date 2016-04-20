@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import java.util.Objects;
@@ -24,11 +25,12 @@ public class UploadPhotoActivity extends Activity implements View.OnClickListene
     private static final int RESULT_LOAD_IMAGE = 1;
 
     ImageView imageToUpload;
-    Button uploadImage;
+    ImageButton uploadImage;
     EditText uploadImageName;
     String uploasImageNameStr;
 
     String backToView;
+    String order;
 
     PhotoInfo newPhoto;
     PhotoModel model;
@@ -42,11 +44,13 @@ public class UploadPhotoActivity extends Activity implements View.OnClickListene
 
         Bundle extras = getIntent().getExtras();
         backToView = extras.getString("Which View");
+        order = extras.getString("Based on");
         Log.d(TAG, backToView);
+        Log.d("TEST", order);
 
         imageToUpload = (ImageView) findViewById(R.id.imageToUpload);
         imageToUpload.setImageResource(R.drawable.emptyphoto);
-        uploadImage = (Button) findViewById(R.id.uploadImage);
+        uploadImage = (ImageButton) findViewById(R.id.uploadImage);
         uploadImageName = (EditText) findViewById(R.id.editTextUploadName);
 
         model = PhotoModel.getInstance();
@@ -78,10 +82,12 @@ public class UploadPhotoActivity extends Activity implements View.OnClickListene
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                         if (Objects.equals(backToView, "GalleryMode")) {
                             Intent intent = new Intent(UploadPhotoActivity.this, MainActivityGalleryMode.class);
+                            intent.putExtra("Based on", order);
                             startActivity(intent);
                         } else {
                             if (Objects.equals(backToView, "RatingMode")) {
                                 Intent intent = new Intent(UploadPhotoActivity.this, MainActivityRatingMode.class);
+                                intent.putExtra("Based on", order);
                                 startActivity(intent);
                             }
                         }
@@ -101,57 +107,4 @@ public class UploadPhotoActivity extends Activity implements View.OnClickListene
             imageToUpload.setImageURI(selectedImage);
         }
     }
-/*
-    private class UploadImage extends AsyncTask <Void, Void, Void> {
-
-        Bitmap image;
-        String name;
-
-        public UploadImage(Bitmap image, String name) {
-            this.image = image;
-            this.name = name;
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            // to hold the byte representation of the image:
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-
-            image.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream); // 100 is a quality of the image
-
-            String encodedImage = Base64.encodeToString(byteArrayOutputStream.toByteArray(), Base64.DEFAULT);
-
-            ArrayList<NameValuePairs> dataToSend = new ArrayList<>();
-            dataToSend.add(new BasicNameValuePair("image", encodedImage));
-            dataToSend.add(new BasicNameValuePair("name", name));
-
-            HttpParams httpRequestParams = getHttpRequestParams();
-
-            HttpURLConnection client = new DefaultHttpClient(httpRequestParams);
-            HttpPost post = new HttpPost(SERVER_ADDRESS + "SavePicture.php");
-
-            try {
-                post.setEntity(new UrlEncodedFormEntity(dataToSend));
-                client.execute(post);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            return null;
-        }
-        // what happens after code above was executed:
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-        }
-    }
-
-    private HttpParams getHttpRequestParams() {
-        HttpParams httpRequestParams = new BasicHttpParams();
-        HttpConnectionParams.setConnectionTimeout(httpRequestParams, 1000 * 30); // timeout in 30 seconds
-        HttpConnectionParams.setSoTimeout(httpRequestParams, 1000 * 30);
-        return httpRequestParams;
-    } */
-
 }

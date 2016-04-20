@@ -7,27 +7,25 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-    <GridView
-        android:id="@+id/activity_main_gallery_gridView"
+    <ListView
+        android:id="@+id/fragment_rates_ratings_listView"
         android:layout_width="300dp"
         android:stretchMode="columnWidth"
         android:gravity="center"
         android:background="#E6E6FA"
-        android:paddingTop="15dp"
+        android:paddingTop="2dp"
         android:layout_height="300dp"
-        android:numColumns="auto_fit"
+        android:numColumns="1"
         android:layout_below="@+id/textView4"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true">
-    </GridView>
-
-
+        android:layout_marginBottom="25dp"
+        android:layout_centerHorizontal="true">
+    </ListView>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Gallery:"
+        android:text="Ratings:"
         android:textSize="39dp"
         android:textStyle="bold"
         android:textAlignment="center"
@@ -40,10 +38,10 @@
         android:textColor="#7593b4"
         android:singleLine="false"
         android:layout_below="@+id/imageView4"
-        android:layout_alignLeft="@+id/activity_main_gallery_gridView"
-        android:layout_alignStart="@+id/activity_main_gallery_gridView"
-        android:layout_alignRight="@+id/activity_main_gallery_gridView"
-        android:layout_alignEnd="@+id/activity_main_gallery_gridView" />
+        android:layout_alignLeft="@+id/fragment_rates_ratings_listView"
+        android:layout_alignStart="@+id/fragment_rates_ratings_listView"
+        android:layout_alignRight="@+id/fragment_rates_ratings_listView"
+        android:layout_alignEnd="@+id/fragment_rates_ratings_listView" />
 
 
     <ImageView
@@ -54,6 +52,15 @@
         android:layout_marginTop="30dp"
         android:layout_alignLeft="@+id/textView4"
         android:layout_alignStart="@+id/textView4" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Ratings"
+        android:id="@+id/textView7"
+        android:layout_above="@+id/fragment_rates_ratings_listView"
+        android:layout_centerHorizontal="true" />
 
 
 </RelativeLayout>

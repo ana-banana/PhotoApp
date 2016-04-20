@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
         def = BitmapFactory.decodeResource(getResources(), R.drawable.emptyphotofaded);
         model = PhotoModel.getInstance();
-        //model.setDefaults(def); // default bitmap
+        model.setDefaults(def); // default bitmap
 
         ImageButton startButton = (ImageButton) findViewById(R.id.imageButtonToGallery);
         startButton.setOnClickListener(
@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(MainActivity.this, MainActivityGalleryMode.class);
+                        intent.putExtra("Based on", "upload");
                         startActivity(intent);
                     }
                 }

@@ -7,22 +7,6 @@
     android:fitsSystemWindows="true"
     tools:context=".MainActivityRatingMode">
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/my_toolbar_mar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#7593b4"
-            android:elevation="4dp"
-            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
-
-
-    </android.support.design.widget.AppBarLayout>
 
     <include layout="@layout/content_main_ratings_view" />
 

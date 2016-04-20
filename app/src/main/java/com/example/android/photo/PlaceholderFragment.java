@@ -9,7 +9,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
 import android.widget.TextView;
 
 /**
@@ -41,7 +40,7 @@ public class PlaceholderFragment extends Fragment {
         /*View rootView = inflater.inflate(R.layout.main_gallery_view, container, false);
         GridView gridView = (GridView) rootView.findViewById(R.id.activity_main_gallery_gridView);
         PhotoModel model = PhotoModel.getInstance();
-        ImageAdapter currentState = ImageAdapter.getInstance(getContext(), model);
+        ImageAdapterRating currentState = ImageAdapterRating.getInstance(getContext(), model);
         currentState.updateBitmaps(model);
         gridView.setAdapter(currentState);
         return rootView;*/
