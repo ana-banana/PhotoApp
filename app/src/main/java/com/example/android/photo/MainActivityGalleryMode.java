@@ -115,6 +115,20 @@ public class MainActivityGalleryMode extends AppCompatActivity {
                 }
         ); */
 
+        ImageButton resetButton = (ImageButton) findViewById(R.id.imageButtonReset);
+        resetButton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        PhotoModel model = PhotoModel.getInstance();
+                        model.resetPhotoModel();
+                        Intent intent = getIntent();
+                        finish();
+                        startActivity(intent);
+                    }
+                }
+        );
+
     }
 
     @Override

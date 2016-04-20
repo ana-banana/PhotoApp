@@ -36,7 +36,7 @@ public class RatesUploadsFragment extends Fragment implements AdapterView.OnItem
         model = PhotoModel.getInstance();
         //Bitmap defBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.emptyphotofaded);
         //model.setDefaults(defBitmap);
-        model.showByTime();
+        //model.showByTime();
         ArrayList<RatedPhotosRow> picturesList = new ArrayList<RatedPhotosRow>();
         update = new Bitmap[maxPhotos];
         update = model.getBitmapsUpload();

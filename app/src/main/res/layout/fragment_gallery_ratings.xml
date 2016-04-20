@@ -60,9 +60,9 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Ratings"
-        android:layout_marginTop="3dp"
+        android:paddingTop="5dp"
         android:id="@+id/textView6"
-        android:layout_above="@+id/fragment_gallery_ratings_gridView"
+        android:layout_alignTop="@+id/textView4"
         android:layout_centerHorizontal="true" />
 
 

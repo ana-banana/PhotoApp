@@ -33,6 +33,7 @@ public class OnePhotoActivity extends Activity {
     TextView yourRating;
     TextView setRating;
     ImageButton backToGalleryButton;
+    ImageButton nextPhoto;
     ImageButton sbmRating;
     RatingBar ratePhoto;
 
@@ -87,6 +88,26 @@ public class OnePhotoActivity extends Activity {
                             Intent intent = new Intent(OnePhotoActivity.this, MainActivityRatingMode.class);
                             intent.putExtra("Based on", order);
                             startActivity(intent);
+                        }
+                    }
+                }
+        );
+        nextPhoto = (ImageButton) findViewById(R.id.imageButtonNextPhoto);
+        nextPhoto.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (photoNumber < (model.uploadedPhotos - 1)) {
+                            Intent intent = getIntent();
+                            // you need to inform the OnePhotoActivity that you want to see photo at this specific position user clicked
+                            String pos = String.valueOf(photoNumber + 1);
+                            intent.putExtra("Which Photo", pos);
+                            intent.putExtra("Based on", order);
+                            intent.putExtra("Which View", backToView);
+                            finish();
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(OnePhotoActivity.this, "Sorry, this is the last photo. Upload more", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }
@@ -160,7 +181,5 @@ public class OnePhotoActivity extends Activity {
         );
 
     }
-
-
 
 }

@@ -106,6 +106,19 @@ public class MainActivityRatingMode extends AppCompatActivity {
                 }
         );
 
+        ImageButton resetButton = (ImageButton) findViewById(R.id.imageButtonReset);
+        resetButton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        PhotoModel model = PhotoModel.getInstance();
+                        model.resetPhotoModel();
+                        Intent intent = new Intent(MainActivityRatingMode.this, MainActivityGalleryMode.class);
+                        startActivity(intent);
+                    }
+                }
+        );
+
     }
 
     @Override
@@ -143,25 +156,16 @@ public class MainActivityRatingMode extends AppCompatActivity {
             // Return a PlaceholderFragment (defined as a static inner class below).
             //return PlaceholderFragment.newInstance(position + 1);
             Fragment fragment = null;
-            if (Objects.equals(startOrder, "upload")) {
-                startOrder = "none";
-                order = "upload";
-                fragment = new RatesUploadsFragment();
-            } else if (Objects.equals(startOrder, "rating")) {
-                startOrder = "none";
-                order = "rating";
-                fragment = new RatesRatingsFragment();
-            } else {
-                switch (position) {
-                    case 0:
-                        order = "upload";
-                        fragment = new RatesUploadsFragment();
-                        break;
-                    case 1:
-                        order = "rating";
-                        fragment = new RatesRatingsFragment();
-                        break;
-                }
+            switch (position) {
+                case 0:
+                    order = "upload";
+                    fragment = new RatesUploadsFragment();
+                    break;
+                case 1:
+                    order = "upload";
+                    //Log.d(TAG, "Changed order to upload where should not");
+                    fragment = new RatesRatingsFragment();
+                    break;
             }
             return fragment;
         }

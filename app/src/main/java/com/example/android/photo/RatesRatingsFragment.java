@@ -37,7 +37,7 @@ public class RatesRatingsFragment  extends Fragment implements AdapterView.OnIte
         model = PhotoModel.getInstance();
         //Bitmap defBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.emptyphotofaded);
         //model.setDefaults(defBitmap);
-        model.showByRating();
+        //model.showByRating();
         ArrayList<RatedPhotosRow> picturesList = new ArrayList<RatedPhotosRow>();
         update = new Bitmap[maxPhotos];
         update = model.getBitmapsRating();

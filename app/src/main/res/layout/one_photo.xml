@@ -15,7 +15,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="1">
+    android:weightSum="1"
+        android:id="@+id/relativeLayout">
 
 
     <ImageView
@@ -94,11 +95,23 @@
         android:layout_height="wrap_content"
         android:src="@drawable/buttonback"
         android:background="#7593b4"
-        android:layout_marginBottom="20dp"
         android:id="@+id/buttonBackToGallery"
         android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="15dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignLeft="@+id/relativeLayout"
+        android:layout_alignStart="@+id/relativeLayout" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageButtonNextPhoto"
+        android:src="@drawable/buttonnextphoto"
+        android:layout_marginBottom="15dp"
+        android:background="#7593b4"
+        android:layout_alignTop="@+id/buttonBackToGallery"
+        android:layout_alignRight="@+id/relativeLayout"
+        android:layout_alignEnd="@+id/relativeLayout" />
 
 
 </RelativeLayout>

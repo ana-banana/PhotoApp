@@ -61,12 +61,13 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Uploads"
         android:textAlignment="center"
+        android:paddingTop="5dp"
         android:id="@+id/textView6"
-        android:layout_alignParentTop="true"
-        android:layout_alignLeft="@+id/imageView4"
-        android:layout_alignStart="@+id/imageView4"
-        android:layout_alignRight="@+id/imageView4"
-        android:layout_alignEnd="@+id/imageView4" />
+        android:layout_alignTop="@+id/textView4"
+        android:layout_alignLeft="@+id/textView4"
+        android:layout_alignStart="@+id/textView4"
+        android:layout_alignRight="@+id/textView4"
+        android:layout_alignEnd="@+id/textView4" />
 
 
 </RelativeLayout>
