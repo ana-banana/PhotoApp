@@ -28,6 +28,7 @@ public class UploadPhotoActivity extends Activity implements View.OnClickListene
     ImageButton uploadImage;
     EditText uploadImageName;
     String uploasImageNameStr;
+    boolean chose = false;
 
     String backToView;
     String order;
@@ -64,14 +65,15 @@ public class UploadPhotoActivity extends Activity implements View.OnClickListene
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.imageToUpload:
+            case R.id.imageToUpload: // onClick to chose an image to upload
                 // allows a gallery to be open:
                 Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE);
                 // "forResult" part allows to get back after you select an image
+                chose = true; // confirms that user chose a photo to upload
                 break;
-            case R.id.uploadImage:
-                if (!cklicked) {
+            case R.id.uploadImage: // onClick for "Upload me!" button
+                if ((!cklicked) && chose){
                     cklicked = true;
                     Bitmap myPictureUploading = ((BitmapDrawable) imageToUpload.getDrawable()).getBitmap();
                     uploasImageNameStr = uploadImageName.getText().toString();

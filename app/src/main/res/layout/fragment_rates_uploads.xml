@@ -58,11 +58,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Uploads"
+        android:text="Photos shown in upload order"
+        android:textAlignment="center"
         android:paddingTop="5dp"
-        android:id="@+id/textView7"
-        android:layout_alignTop="@+id/textView4"
-        android:layout_centerHorizontal="true" />
+        android:id="@+id/textView6"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/imageView4"
+        android:layout_alignEnd="@+id/imageView4"
+        android:layout_alignLeft="@+id/imageView4"
+        android:layout_alignStart="@+id/imageView4" />
 
 
 </RelativeLayout>

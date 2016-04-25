@@ -13,6 +13,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -49,22 +50,30 @@ public class MainActivityRatingMode extends AppCompatActivity {
         tabLayout.setupWithViewPager(mViewPager);
 
         tabLayout.getTabAt(0).setIcon(R.drawable.basedonupload);
-        tabLayout.getTabAt(1).setIcon(R.drawable.basedonrating);
+        tabLayout.getTabAt(1).setIcon(R.drawable.star);
 
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        assert actionBar != null;
         actionBar.setDisplayShowHomeEnabled(false);
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayShowCustomEnabled(true);
-        actionBar.setCustomView(R.layout.action_bar);
+        // to make it actually fit parent:
+        View vAction = LayoutInflater
+                .from(actionBar.getThemedContext())
+                .inflate(R.layout.action_bar, null);
+        android.support.v7.app.ActionBar.LayoutParams params = new android.support.v7.app.ActionBar.LayoutParams(
+                android.support.v7.app.ActionBar.LayoutParams.MATCH_PARENT,
+                android.support.v7.app.ActionBar.LayoutParams.MATCH_PARENT);
+        actionBar.setCustomView(vAction, params);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        //FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        //fab.setOnClickListener(new View.OnClickListener() {
+        //    @Override
+        //    public void onClick(View view) {
+        //        Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+        //                .setAction("Action", null).show();
+        //    }
+        //});
 
         Bundle extra = getIntent().getExtras();
         startOrder = extra.getString("Based on");
@@ -121,14 +130,14 @@ public class MainActivityRatingMode extends AppCompatActivity {
 
     }
 
-    @Override
+   /* @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
-    }
+    } */
 
-    @Override
+   /* @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -141,7 +150,7 @@ public class MainActivityRatingMode extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
@@ -178,12 +187,12 @@ public class MainActivityRatingMode extends AppCompatActivity {
 
         @Override
         public CharSequence getPageTitle(int position) {
-          /*  switch (position) {
+            switch (position) {
                 case 0:
-                    return "Uploads";
+                    return "Upload Order";
                 case 1:
-                    return "Ratings";
-            } */
+                    return "Rating Order";
+            }
             // return null to display only the icon
             return null;
         }

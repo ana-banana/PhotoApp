@@ -58,7 +58,7 @@ public class ImageAdapterRating extends BaseAdapter {
         if (convertView == null) {
             // if it's not recycled, initialize some attributes
             imageView = new ImageView(mContext);
-            imageView.setLayoutParams(new GridView.LayoutParams(350, 350));
+            imageView.setLayoutParams(new GridView.LayoutParams(380, 380));
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             //imageView.setPadding(20, 20, 20, 20);
         } else {

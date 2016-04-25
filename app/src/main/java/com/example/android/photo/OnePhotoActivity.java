@@ -6,7 +6,10 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -33,7 +36,7 @@ public class OnePhotoActivity extends Activity {
     TextView yourRating;
     TextView setRating;
     ImageButton backToGalleryButton;
-    ImageButton nextPhoto;
+    ImageButton nextPhoto, prevPhoto;
     ImageButton sbmRating;
     RatingBar ratePhoto;
 
@@ -45,9 +48,29 @@ public class OnePhotoActivity extends Activity {
     @TargetApi(Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.one_photo);
+        setContentView(R.layout.content_one_photo);
+
+       /* Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar_opa);
+        setSupportActionBar(toolbar);
+
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        assert actionBar != null;
+        actionBar.setDisplayShowHomeEnabled(false);
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayShowCustomEnabled(true);
+
+        View vAction = LayoutInflater
+                .from(actionBar.getThemedContext())
+                .inflate(R.layout.action_bar_one_photo, null);
+        android.support.v7.app.ActionBar.LayoutParams params = new android.support.v7.app.ActionBar.LayoutParams(
+                android.support.v7.app.ActionBar.LayoutParams.MATCH_PARENT,
+                android.support.v7.app.ActionBar.LayoutParams.MATCH_PARENT);
+        actionBar.setCustomView(vAction, params);
+
+        //actionBar.setCustomView(R.layout.action_bar_one_photo); */
 
         Bundle extras = getIntent().getExtras();
         backToView = extras.getString("Which View");
@@ -108,6 +131,27 @@ public class OnePhotoActivity extends Activity {
                             startActivity(intent);
                         } else {
                             Toast.makeText(OnePhotoActivity.this, "Sorry, this is the last photo. Upload more", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+        );
+
+        prevPhoto = (ImageButton) findViewById(R.id.imageButtonPrevPhoto);
+        prevPhoto.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (photoNumber > 0) {
+                            Intent intent = getIntent();
+                            // you need to inform the OnePhotoActivity that you want to see photo at this specific position user clicked
+                            String pos = String.valueOf(photoNumber - 1);
+                            intent.putExtra("Which Photo", pos);
+                            intent.putExtra("Based on", order);
+                            intent.putExtra("Which View", backToView);
+                            finish();
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(OnePhotoActivity.this, "This is the first photo", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }

@@ -9,11 +9,13 @@
 
     <GridView
         android:id="@+id/fragment_gallery_uploads_gridView"
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
+        android:layout_marginRight="12dp"
+        android:layout_marginLeft="12dp"
         android:stretchMode="columnWidth"
         android:gravity="center"
         android:background="#E6E6FA"
-        android:paddingTop="15dp"
+        android:paddingTop="5dp"
         android:layout_height="300dp"
         android:numColumns="auto_fit"
         android:layout_marginBottom="25dp"
@@ -53,21 +55,11 @@
         android:src="@drawable/linerose"
         android:layout_marginTop="30dp"
         android:layout_alignLeft="@+id/textView4"
-        android:layout_alignStart="@+id/textView4" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Uploads"
-        android:textAlignment="center"
-        android:paddingTop="5dp"
-        android:id="@+id/textView6"
-        android:layout_alignTop="@+id/textView4"
-        android:layout_alignLeft="@+id/textView4"
         android:layout_alignStart="@+id/textView4"
         android:layout_alignRight="@+id/textView4"
         android:layout_alignEnd="@+id/textView4" />
+
+
 
 
 </RelativeLayout>

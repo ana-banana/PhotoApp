@@ -27,7 +27,7 @@ public class MainActivityPhotos extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.main_activity_photos);
+        //setContentView(R.layout.main_activity_photos);
 
         //     Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar_mag);
         //     setSupportActionBar(toolbar);
