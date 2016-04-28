@@ -40,7 +40,7 @@ public class PlaceholderFragment extends Fragment {
         /*View rootView = inflater.inflate(R.layout.main_gallery_view, container, false);
         GridView gridView = (GridView) rootView.findViewById(R.id.activity_main_gallery_gridView);
         PhotoModel model = PhotoModel.getInstance();
-        ImageAdapterRating currentState = ImageAdapterRating.getInstance(getContext(), model);
+        ImageAdapterGalleryRating currentState = ImageAdapterGalleryRating.getInstance(getContext(), model);
         currentState.updateBitmaps(model);
         gridView.setAdapter(currentState);
         return rootView;*/

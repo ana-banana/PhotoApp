@@ -1,17 +1,16 @@
 package com.example.android.photo;
-
 import android.graphics.Bitmap;
 
-/**
- * Created by andrey on 19/04/2016.
- */
-public class RatedPhotosRow {
+
+public class InfoModeListRow {
     private Bitmap photoBitm;
     private float photoRating;
+    private String photoName;
 
-    public RatedPhotosRow(Bitmap photoBitm, float photoRating) {
+    public InfoModeListRow(Bitmap photoBitm, float photoRating, String photoName) {
         this.photoBitm = photoBitm;
         this.photoRating = photoRating;
+        this.photoName = photoName;
     }
 
     public float getPhotoRating() {
@@ -28,6 +27,14 @@ public class RatedPhotosRow {
 
     public void setPhotoBitm(Bitmap photoBitm) {
         this.photoBitm = photoBitm;
+    }
+
+    public String getPhotoName() {
+        return photoName;
+    }
+
+    public void setPhotoName(String photoName) {
+        this.photoName = photoName;
     }
 
 }

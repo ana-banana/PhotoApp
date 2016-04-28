@@ -14,7 +14,7 @@ import android.widget.Toast;
 /**
  * Created by andrey on 13/04/2016.
  */
-public class GalleryRatingsFragment extends Fragment implements AdapterView.OnItemClickListener {
+public class FragmentGalleryRatings extends Fragment implements AdapterView.OnItemClickListener {
 
     PhotoModel model;
 
@@ -25,13 +25,7 @@ public class GalleryRatingsFragment extends Fragment implements AdapterView.OnIt
         View rootView = inflater.inflate(R.layout.fragment_gallery_ratings, container, false);
         GridView gridView = (GridView) rootView.findViewById(R.id.fragment_gallery_ratings_gridView);
         model = PhotoModel.getInstance();
-        //Bitmap defBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.emptyphotofaded);
-        //model.setDefaults(defBitmap);
-
-     //   model.showByRating();
-
-
-        ImageAdapterRating currentState = ImageAdapterRating.getInstance(getActivity().getApplicationContext(), model);
+        ImageAdapterGalleryRating currentState = ImageAdapterGalleryRating.getInstance(getActivity().getApplicationContext(), model);
         currentState.updateBitmaps(model);
         gridView.setAdapter(currentState);
         gridView.setOnItemClickListener(this);
@@ -45,8 +39,8 @@ public class GalleryRatingsFragment extends Fragment implements AdapterView.OnIt
             if (position >= model.uploadedPhotos) {
                 Toast.makeText(getContext(), "Sorry, there is no photo here", Toast.LENGTH_SHORT).show();
             } else {
-                // you need to inform the OnePhotoActivity that you want to see photo at this specific position user clicked
-                Intent intent = new Intent(getContext(), OnePhotoActivity.class);
+                // you need to inform the ActivityOnePhoto that you want to see photo at this specific position user clicked
+                Intent intent = new Intent(getContext(), ActivityOnePhoto.class);
                 String pos = String.valueOf(position);
                 intent.putExtra("Which Photo", pos);
                 intent.putExtra("Based on", "rating");
@@ -58,7 +52,7 @@ public class GalleryRatingsFragment extends Fragment implements AdapterView.OnIt
 }
 
    /* PhotoModel model;
-    ImageRatingsAdapter currentState;
+    ImageAdapterForInfoMode currentState;
     private static int maxPhotos = 8;
     Bitmap[] update;
     float[] updateRatings;
@@ -71,26 +65,26 @@ public class GalleryRatingsFragment extends Fragment implements AdapterView.OnIt
         model = PhotoModel.getInstance();
         //Bitmap defBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.emptyphotofaded);
         //model.setDefaults(defBitmap);
-        ArrayList<RatedPhotosRow> picturesList = new ArrayList<RatedPhotosRow>();
+        ArrayList<InfoModeListRow> picturesList = new ArrayList<InfoModeListRow>();
         update = new Bitmap[maxPhotos];
         update = model.getBitmaps();
         updateRatings = new float[maxPhotos];
         updateRatings = model.getPictureRatings();
         for (int i = 0; i < maxPhotos; i++) {
-            picturesList.add(new RatedPhotosRow(update[i], updateRatings[i]));
+            picturesList.add(new InfoModeListRow(update[i], updateRatings[i]));
         }
-        currentState = ImageRatingsAdapter.getInstance(getContext(), picturesList);
+        currentState = ImageAdapterForInfoMode.getInstance(getContext(), picturesList);
         photosListView.setAdapter(currentState);
         photosListView.setOnItemClickListener(this);
         return rootView;
     }
 
-    public class RatedPhotosRow {
+    public class InfoModeListRow {
         private Bitmap photoBitm;
         private float photoRating;
 
 
-        public RatedPhotosRow(Bitmap photoBitm, float photoRating) {
+        public InfoModeListRow(Bitmap photoBitm, float photoRating) {
             this.photoBitm = photoBitm;
             this.photoRating = photoRating;
         }
@@ -118,9 +112,9 @@ public class GalleryRatingsFragment extends Fragment implements AdapterView.OnIt
         if (position >= model.uploadedPhotos) {
             Toast.makeText(getContext(), "Sorry, there is no photo here", Toast.LENGTH_SHORT).show();
         } else {
-            RatedPhotosRow ratedPhotosRow = (RatedPhotosRow) adapter.getItemAtPosition(position);
-            Intent intent = new Intent(getContext(), OnePhotoActivity.class);
-            // you need to inform the OnePhotoActivity that you want to see photo at this specific position user clicked
+            InfoModeListRow ratedPhotosRow = (InfoModeListRow) adapter.getItemAtPosition(position);
+            Intent intent = new Intent(getContext(), ActivityOnePhoto.class);
+            // you need to inform the ActivityOnePhoto that you want to see photo at this specific position user clicked
             String pos = String.valueOf(position);
             intent.putExtra("Which Photo", pos);
             startActivity(intent);

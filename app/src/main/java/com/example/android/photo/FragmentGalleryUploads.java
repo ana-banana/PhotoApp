@@ -11,10 +11,8 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
-/**
- * Created by andrey on 13/04/2016.
- */
-public class GalleryUploadsFragment extends Fragment implements AdapterView.OnItemClickListener {
+
+public class FragmentGalleryUploads extends Fragment implements AdapterView.OnItemClickListener {
 
     PhotoModel model;
 
@@ -29,7 +27,7 @@ public class GalleryUploadsFragment extends Fragment implements AdapterView.OnIt
         //model.setDefaults(defBitmap);
         //model.showByTime();
 
-        ImageAdapterUpload currentState = ImageAdapterUpload.getInstance(getActivity().getApplicationContext(), model);
+        ImageAdapterGalleryUpload currentState = ImageAdapterGalleryUpload.getInstance(getActivity().getApplicationContext(), model);
 
         currentState.updateBitmaps(model);
         gridView.setAdapter(currentState);
@@ -44,8 +42,8 @@ public class GalleryUploadsFragment extends Fragment implements AdapterView.OnIt
             if (position >= model.uploadedPhotos) {
                 Toast.makeText(getContext(), "Sorry, there is no photo here", Toast.LENGTH_SHORT).show();
             } else {
-                // you need to inform the OnePhotoActivity that you want to see photo at this specific position user clicked
-                Intent intent = new Intent(getContext(), OnePhotoActivity.class);
+                // you need to inform the ActivityOnePhoto that you want to see photo at this specific position user clicked
+                Intent intent = new Intent(getContext(), ActivityOnePhoto.class);
                 String pos = String.valueOf(position);
                 intent.putExtra("Which Photo", pos);
                 intent.putExtra("Based on", "upload");

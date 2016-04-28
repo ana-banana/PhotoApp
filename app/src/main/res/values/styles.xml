@@ -24,4 +24,11 @@
         <item name="android:maxHeight">42dp</item>
     </style>
 
+    <style name="photoRatingBarSmall" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/ratingstartssmall</item>
+        <item name="android:maxWidth">300dp</item>
+        <item name="android:minHeight">15dp</item>
+        <item name="android:maxHeight">15dp</item>
+    </style>
+
 </resources>

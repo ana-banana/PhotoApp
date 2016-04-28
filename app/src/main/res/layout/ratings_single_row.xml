@@ -1,35 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:weightSum="100"
+    android:descendantFocusability="blocksDescendants">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="30">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text=""
+            android:layout_marginTop="3dp"
+            android:layout_gravity="center"
+            android:id="@+id/rating_name" />
+
+        <RatingBar
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ratingBarImageRatingView"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"
+            android:numStars="5"
+            android:rating="1"
+            android:stepSize="1"
+            android:paddingLeft="1dp"
+            android:paddingRight="1dp"
+            android:scaleX="1"
+            style="@style/photoRatingBarSmall"
+            android:clickable="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:isIndicator="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Small Text"
+            android:layout_gravity="center"
+            android:id="@+id/rating_rating" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="70">
+        <ImageView
+            android:id="@+id/imageViewBitmap"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:layout_marginBottom="5dp" />
+    </LinearLayout>
 
 
-    >
 
-    <ImageView
-        android:id="@+id/imageViewBitmap"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_gravity="center"
-        android:paddingLeft="5dp"
-        android:layout_marginBottom="5dp"
-        android:paddingRight="5dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-
-    <RatingBar
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/ratingBarImageRatingView"
-        android:layout_gravity="center"
-        android:layout_marginBottom="10dp"
-        android:numStars="5"
-        android:rating="1"
-        android:stepSize="0.5"
-        style="@style/photoRatingBar"
-        android:layout_below="@+id/imageViewBitmap"
-        android:layout_centerHorizontal="true" />
-
-</RelativeLayout>
+</LinearLayout>

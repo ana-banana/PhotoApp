@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -18,7 +17,7 @@ import android.widget.ImageView;
 import java.util.Objects;
 
 
-public class UploadPhotoActivity extends Activity implements View.OnClickListener {
+public class ActivityUploadPhoto extends Activity implements View.OnClickListener {
 
     final static String TAG = "TEST";
 
@@ -44,10 +43,10 @@ public class UploadPhotoActivity extends Activity implements View.OnClickListene
         setContentView(R.layout.upload_photo);
 
         Bundle extras = getIntent().getExtras();
-        backToView = extras.getString("Which View");
-        order = extras.getString("Based on");
-        Log.d(TAG, backToView);
-        Log.d("TEST", order);
+       // backToView = extras.getString("Which View");
+       // order = extras.getString("Based on");
+       // Log.d(TAG, backToView);
+       // Log.d("TEST", order);
 
         imageToUpload = (ImageView) findViewById(R.id.imageToUpload);
         imageToUpload.setImageResource(R.drawable.emptyphoto);
@@ -83,13 +82,13 @@ public class UploadPhotoActivity extends Activity implements View.OnClickListene
                     Log.d(TAG, status);
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                         if (Objects.equals(backToView, "GalleryMode")) {
-                            Intent intent = new Intent(UploadPhotoActivity.this, MainActivityGalleryMode.class);
-                            intent.putExtra("Based on", order);
+                            Intent intent = new Intent(ActivityUploadPhoto.this, ActivityModeGallery.class);
+                          //  intent.putExtra("Based on", order);
                             startActivity(intent);
                         } else {
                             if (Objects.equals(backToView, "RatingMode")) {
-                                Intent intent = new Intent(UploadPhotoActivity.this, MainActivityRatingMode.class);
-                                intent.putExtra("Based on", order);
+                                Intent intent = new Intent(ActivityUploadPhoto.this, ActivityModeInfo.class);
+                          //      intent.putExtra("Based on", order);
                                 startActivity(intent);
                             }
                         }

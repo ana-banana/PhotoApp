@@ -6,10 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -20,7 +17,7 @@ import android.widget.Toast;
 import java.util.Objects;
 
 
-public class OnePhotoActivity extends Activity {
+public class ActivityOnePhoto extends Activity {
 
     int photoNumber; //position starts from 0
     String photoNumStr;
@@ -73,19 +70,19 @@ public class OnePhotoActivity extends Activity {
         //actionBar.setCustomView(R.layout.action_bar_one_photo); */
 
         Bundle extras = getIntent().getExtras();
-        backToView = extras.getString("Which View");
+       // backToView = extras.getString("Which View");
         model = PhotoModel.getInstance();
         photoNumStr = extras.getString("Which Photo");
-       Log.d("TAG", photoNumStr);
-        order = extras.getString("Based on");
+
+       // order = extras.getString("Based on");
         try {
             photoNumber = Integer.parseInt(photoNumStr);
         } catch (NumberFormatException nfe) {
         }
-        if (Objects.equals(order, "upload")) {
+        if (model.getOrder()) { // based on upload
             myImage = model.myPhotos[photoNumber].getPictureBit();
             myName = model.myPhotos[photoNumber].getPictureName();
-        } else if (Objects.equals(order, "rating")) {
+        } else {
             myImage = model.photosByRating[photoNumber].getPictureBit();
             myName = model.photosByRating[photoNumber].getPictureName();
         }
@@ -104,12 +101,12 @@ public class OnePhotoActivity extends Activity {
                         if (Objects.equals(backToView, "GalleryMode")) {
                             String modelState = "Model byRating when backButton is " + model.byRating;
                             Log.d(TAG, modelState);
-                            Intent intent = new Intent(OnePhotoActivity.this, MainActivityGalleryMode.class);
-                            intent.putExtra("Based on", order);
+                            Intent intent = new Intent(ActivityOnePhoto.this, ActivityModeGallery.class);
+                           // intent.putExtra("Based on", order);
                             startActivity(intent);
                         } else if (Objects.equals(backToView, "RatingsMode")) {
-                            Intent intent = new Intent(OnePhotoActivity.this, MainActivityRatingMode.class);
-                            intent.putExtra("Based on", order);
+                            Intent intent = new Intent(ActivityOnePhoto.this, ActivityModeInfo.class);
+                           // intent.putExtra("Based on", order);
                             startActivity(intent);
                         }
                     }
@@ -122,15 +119,15 @@ public class OnePhotoActivity extends Activity {
                     public void onClick(View v) {
                         if (photoNumber < (model.uploadedPhotos - 1)) {
                             Intent intent = getIntent();
-                            // you need to inform the OnePhotoActivity that you want to see photo at this specific position user clicked
+                            // you need to inform the ActivityOnePhoto that you want to see photo at this specific position user clicked
                             String pos = String.valueOf(photoNumber + 1);
                             intent.putExtra("Which Photo", pos);
-                            intent.putExtra("Based on", order);
+                         //   intent.putExtra("Based on", order);
                             intent.putExtra("Which View", backToView);
                             finish();
                             startActivity(intent);
                         } else {
-                            Toast.makeText(OnePhotoActivity.this, "Sorry, this is the last photo. Upload more", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ActivityOnePhoto.this, "Sorry, this is the last photo. Upload more", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }
@@ -143,32 +140,31 @@ public class OnePhotoActivity extends Activity {
                     public void onClick(View v) {
                         if (photoNumber > 0) {
                             Intent intent = getIntent();
-                            // you need to inform the OnePhotoActivity that you want to see photo at this specific position user clicked
+                            // you need to inform the ActivityOnePhoto that you want to see photo at this specific position user clicked
                             String pos = String.valueOf(photoNumber - 1);
                             intent.putExtra("Which Photo", pos);
-                            intent.putExtra("Based on", order);
+                         //   intent.putExtra("Based on", order);
                             intent.putExtra("Which View", backToView);
                             finish();
                             startActivity(intent);
                         } else {
-                            Toast.makeText(OnePhotoActivity.this, "This is the first photo", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ActivityOnePhoto.this, "This is the first photo", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }
         );
 
-        yourRating = (TextView) findViewById(R.id.textViewYourRating);
-        if (Objects.equals(order, "upload")) {
+        yourRating = (TextView) findViewById(R.id.textViewYourRating); // accumulative(average) rating of the photo for all previous rating events
+        if (model.getOrder()) { // based on upload
             text = "Rating: " + String.valueOf(model.myPhotos[photoNumber].getPictureRating());
-        } else if (Objects.equals(order, "rating")) {
+        } else {
             text = "Rating: " + String.valueOf(model.photosByRating[photoNumber].getPictureRating());
         }
         yourRating.setText(text);
-
         ratePhoto = (RatingBar) findViewById(R.id.ratingBarImage);
-        if (Objects.equals(order, "upload")) {
+        if (model.getOrder()) { // based on upload
             ratePhoto.setRating(model.myPhotos[photoNumber].getPictureRating());
-        } else if (Objects.equals(order, "rating")) {
+        } else {
             ratePhoto.setRating(model.photosByRating[photoNumber].getPictureRating());
         }
         ratePhoto.setOnRatingBarChangeListener(
@@ -180,6 +176,7 @@ public class OnePhotoActivity extends Activity {
                 }
         );
 
+        // Button to submit chosen rating to count it towards average rating of the picture
         sbmRating = (ImageButton) findViewById(R.id.buttonSubmitRating);
         sbmRating.setOnClickListener(
                 new View.OnClickListener() {
@@ -188,36 +185,26 @@ public class OnePhotoActivity extends Activity {
                     public void onClick(View v) {
 
                         text = "Submitted rating " + String.valueOf(ratePhoto.getRating());
-                        Toast.makeText(OnePhotoActivity.this, text, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ActivityOnePhoto.this, text, Toast.LENGTH_SHORT).show();
                         float oldRating = 0;
-                        if (Objects.equals(order, "upload")) {
+                        if (model.getOrder()) { // based on upload
                             oldRating = model.myPhotos[photoNumber].getPictureRating();
-                        } else if (Objects.equals(order, "rating")) {
+                        } else {
                             oldRating = model.photosByRating[photoNumber].getPictureRating();
                         }
-                        String debug2 = "Old rating of picture: " + photoNumber + " is " + oldRating;
-                        Log.d("TAG", debug2);
-                        String debug4 = "Old position in indexes of picture: " + photoNumber + " is " + model.myPhotos[photoNumber].posIndexArray;
-                        Log.d("TAG", debug4);
                         float newRating = 0;
-                        if (Objects.equals(order, "upload")) {
+                        if (model.getOrder()) {
                             model.myPhotos[photoNumber].setRating(ratePhoto.getRating());
                             newRating = model.myPhotos[photoNumber].getPictureRating();
                             text = "Rating: " + String.valueOf(model.myPhotos[photoNumber].getPictureRating());
-                        } else if (Objects.equals(order, "rating")) {
+                        } else {
                             model.photosByRating[photoNumber].setRating(ratePhoto.getRating());
                             newRating = model.photosByRating[photoNumber].getPictureRating();
                             text = "Rating: " + String.valueOf(model.photosByRating[photoNumber].getPictureRating());
                         }
                         yourRating.setText(text);
 
-                        String debug3 = "New rating of picture: " + photoNumber + " is " + newRating;
-                        Log.d("TAG", debug3);
-
-                        model.resetRatedPhotos(photoNumber, oldRating, newRating);
-
-                        String debug5 = "New position in indexes of picture: " + photoNumber + " is " + model.myPhotos[photoNumber].posIndexArray;
-                        Log.d("TAG", debug5);
+                        model.resetRatedPhotos(photoNumber, oldRating, newRating); // recount order based on rating
 
                     }
                 }

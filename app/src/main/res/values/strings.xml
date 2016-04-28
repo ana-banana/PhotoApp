@@ -6,4 +6,5 @@
     <string name="reset_button">Button To Reset</string>
 
     <string name="section_format">Hello World from section: %1$d</string>
+    <string name="menu_profile">My Profile</string>
 </resources>

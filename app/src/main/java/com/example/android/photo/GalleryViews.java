@@ -37,10 +37,10 @@ class MyAdapterSwipe extends FragmentPagerAdapter {
         Fragment fragment = null;
         switch (position) {
             case 0:
-                fragment = new GalleryUploadsFragment();
+                fragment = new FragmentGalleryUploads();
                 break;
             case 1:
-                fragment = new GalleryRatingsFragment();
+                fragment = new FragmentGalleryRatings();
                 break;
         }
         return fragment;

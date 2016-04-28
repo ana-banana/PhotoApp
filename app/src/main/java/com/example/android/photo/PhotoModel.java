@@ -13,6 +13,8 @@ public class PhotoModel {
     PhotoInfo[] myPhotos;
     PhotoInfo[] photosByRating;
 
+    boolean uploadOrder = true; // false = order based on rating
+
     int uploadedPhotos = 0;
 
     int [] indexes; // maps PhotoInfo objects in myPhotos[] to photosByRating; indexes[] contains
@@ -53,6 +55,14 @@ public class PhotoModel {
         }
     }
 
+    public boolean getOrder() {
+        return uploadOrder;
+    }
+
+    public void setOrder(boolean ord) {
+        uploadOrder = ord;
+    }
+
     public void addNewPhoto (PhotoInfo newPhoto) {
             int indexesPos = myPhotos[uploadedPhotos].posIndexArray;
             myPhotos[uploadedPhotos] = newPhoto;
@@ -84,6 +94,28 @@ public class PhotoModel {
             }
             return ratings;
 
+    }
+
+    public String[] getPictureNamesRatings() {
+        for (int i = 0; i < maxPhotos; i++) {
+            photosByRating[i] = myPhotos[indexes[i]];
+        }
+
+        String [] names = new String[maxPhotos];
+        for (int i = 0; i < maxPhotos; i++) {
+            names[i] = photosByRating[i].getPictureName();
+        }
+        return names;
+
+    }
+
+    public String[] getPictureNamesUpload() {
+
+        String[] names = new String[maxPhotos];
+        for (int i = 0; i < maxPhotos; i++) {
+            names[i] = myPhotos[i].getPictureName();
+        }
+        return names;
     }
 
     public Bitmap[] getBitmapsRating() {

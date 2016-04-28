@@ -19,8 +19,8 @@
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageButtonRestartGallery"
-        android:src="@drawable/restartgallerybutton"
+        android:id="@+id/imageButtonProfile"
+        android:src="@drawable/profile_settings_main_button"
         android:layout_marginTop="50dp"
         android:background="#7593b4"
         android:layout_below="@+id/imageButtonToGallery"
@@ -42,13 +42,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Reset my gallery"
+        android:text="Manage my profile"
         android:textSize="20dp"
         android:textColor="#E6E6FA"
         android:id="@+id/textView2"
-        android:layout_below="@+id/imageButtonRestartGallery"
-        android:layout_alignLeft="@+id/imageButtonRestartGallery"
-        android:layout_alignStart="@+id/imageButtonRestartGallery" />
+        android:layout_below="@+id/imageButtonProfile"
+        android:layout_alignLeft="@+id/imageButtonProfile"
+        android:layout_alignStart="@+id/imageButtonProfile" />
 
 
 

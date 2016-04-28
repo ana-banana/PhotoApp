@@ -7,26 +7,26 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
-public class ImageAdapterRating extends BaseAdapter {
+public class ImageAdapterGalleryUpload extends BaseAdapter {
     private static int max = 8;
     private Context mContext;
-    private static ImageAdapterRating mInstance;
+    private static ImageAdapterGalleryUpload mInstance;
     private Bitmap[] mThumbIds = new Bitmap[max];
 
 
-    public static ImageAdapterRating getInstance(Context c, PhotoModel model) {
+    public static ImageAdapterGalleryUpload getInstance(Context c, PhotoModel model) {
         if (mInstance != null) {
             return mInstance;
         } else {
-            mInstance = new ImageAdapterRating(c, model);
+            mInstance = new ImageAdapterGalleryUpload(c, model);
             return mInstance;
         }
     }
 
-    public ImageAdapterRating(Context c, PhotoModel model) {
+    public ImageAdapterGalleryUpload(Context c, PhotoModel model) {
         mContext = c;
         //this.def = def;
-        Bitmap[] update = model.getBitmapsRating();
+        Bitmap[] update = model.getBitmapsUpload();
         for (int i = 0; i < max; i++) {
             mThumbIds[i] = update[i];
         }
@@ -34,7 +34,7 @@ public class ImageAdapterRating extends BaseAdapter {
 
     // update array of bitmaps
     public void updateBitmaps(PhotoModel model) {
-        Bitmap[] update = model.getBitmapsRating();
+        Bitmap[] update = model.getBitmapsUpload();
         for (int i = 0; i < max; i++) {
             mThumbIds[i] = update[i];
         }
@@ -66,7 +66,7 @@ public class ImageAdapterRating extends BaseAdapter {
         }
         imageView.setImageBitmap(mThumbIds[position]);
 
-       // imageView.setImageResource(mThumbIds[position]);
+        // imageView.setImageResource(mThumbIds[position]);
         return imageView;
     }
 

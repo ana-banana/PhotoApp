@@ -5,7 +5,6 @@
     android:layout_height="120dp"
     android:paddingTop="2dp"
     android:paddingBottom="2dp"
-
     android:background="#7593b4"
     android:weightSum="100">
 
@@ -28,7 +27,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/imageButtonGridView"
             android:layout_gravity="center_horizontal"
-            android:src="@drawable/gridvbutton"
+            android:src="@drawable/action_bar_button_gallery"
             android:clickable="true"
             android:background="#7593b4"/>
 
@@ -56,7 +55,7 @@
         android:layout_gravity="center_vertical"
         android:background="@drawable/selector"
         android:paddingTop="12dp"
-        android:layout_weight="25"
+        android:layout_weight="0"
         android:paddingLeft="1dp"
         android:paddingBottom="7dp"
         android:paddingRight="1dp"
@@ -67,16 +66,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/imageButtonRating"
-            android:src="@drawable/ratephotobutton"
             android:background="#7593b4"
             android:clickable="true"
             android:layout_gravity="center_horizontal" />
 
         <TextView
-            android:layout_width="72dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Ratings"
             android:textColor="#daf6f0"
             android:textStyle="bold"
             android:id="@+id/textView3"
@@ -141,8 +138,8 @@
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/imageButtonReset"
-            android:src="@drawable/resetgallery"
+            android:id="@+id/imageButtonProfile"
+            android:src="@drawable/action_bar_button_profile"
             android:background="#7593b4"
             android:layout_gravity="center_horizontal"/>
 
@@ -150,19 +147,59 @@
             android:layout_width="71dp"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Reset"
+            android:text="My Profile"
             android:textStyle="bold"
-            android:id="@+id/textViewResetButton"
+            android:id="@+id/textViewPrifileButton"
             android:textSize="12dp"
             android:layout_gravity="center_horizontal"
             android:textAlignment="center"
             android:textColor="#daf6f0"
-            android:layout_below="@+id/imageButtonReset"
+            android:layout_below="@+id/imageButtonSettings"
             android:foregroundGravity="center_horizontal"
-            android:layout_alignLeft="@+id/imageButtonReset"
-            android:layout_alignStart="@+id/imageButtonReset"
-            android:layout_alignRight="@+id/imageButtonReset"
-            android:layout_alignEnd="@+id/imageButtonReset" />
+            android:layout_alignLeft="@+id/imageButtonSettings"
+            android:layout_alignStart="@+id/imageButtonSettings"
+            android:layout_alignRight="@+id/imageButtonSettings"
+            android:layout_alignEnd="@+id/imageButtonSettings" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@drawable/selector"
+        android:paddingTop="12dp"
+        android:paddingLeft="1dp"
+        android:paddingBottom="7dp"
+        android:paddingRight="1dp"
+        android:layout_weight="25"
+        android:focusableInTouchMode="true"
+        android:clickable="true">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageButtonSettings"
+            android:src="@drawable/action_bar_button_settings"
+            android:background="#7593b4"
+            android:layout_gravity="center_horizontal"/>
+
+        <TextView
+            android:layout_width="71dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Settings"
+            android:textStyle="bold"
+            android:id="@+id/textViewSettingsButton"
+            android:textSize="12dp"
+            android:layout_gravity="center_horizontal"
+            android:textAlignment="center"
+            android:textColor="#daf6f0"
+            android:layout_below="@+id/imageButtonSettings"
+            android:foregroundGravity="center_horizontal"
+            android:layout_alignLeft="@+id/imageButtonSettings"
+            android:layout_alignStart="@+id/imageButtonSettings"
+            android:layout_alignRight="@+id/imageButtonSettings"
+            android:layout_alignEnd="@+id/imageButtonSettings" />
     </LinearLayout>
 
 
