@@ -83,8 +83,7 @@ public class ActivityManageProfile extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(ActivityManageProfile.this, ActivityUploadPhoto.class);
-                        //intent.putExtra("Which View", "GalleryMode"); // gallery mode or rating mode
-                        //intent.putExtra("Based on", "upload"); // which order to come back to
+                        finish();
                         startActivity(intent);
                     }
                 }
@@ -111,8 +110,8 @@ public class ActivityManageProfile extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(ActivityManageProfile.this, ActivityModeGallery.class);
+                        finish();
                         startActivity(intent);
-
                     }
                 }
         );
@@ -124,6 +123,7 @@ public class ActivityManageProfile extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(ActivityManageProfile.this, ActivitySettings.class);
+                        finish();
                         startActivity(intent);
                     }
                 }
@@ -136,6 +136,7 @@ public class ActivityManageProfile extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(ActivityManageProfile.this, ActivityProfile.class);
+                        finish();
                         startActivity(intent);
                     }
                 }

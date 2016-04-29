@@ -125,6 +125,17 @@ public class ActivityProfile extends AppCompatActivity {
 // Profile Name
         profileName = (TextView) findViewById(R.id.profile_name);
         profileName.setText(profile.myProfile.getProfName());
+        profileName.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(ActivityProfile.this, ActivityManageProfile.class);
+                        finish();
+                        startActivity(intent);
+                    }
+                }
+        );
+
 
 // Friends related info
         numberOfFriends = (TextView) findViewById(R.id.how_many_friends);
@@ -134,6 +145,16 @@ public class ActivityProfile extends AppCompatActivity {
 // Profile Picture
         profilePhoto = (ImageView) findViewById(R.id.my_profile_photo);
         profilePhoto.setImageBitmap(profile.myProfile.getProfPicture());
+        profilePhoto.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(ActivityProfile.this, ActivityManageProfile.class);
+                        finish();
+                        startActivity(intent);
+                    }
+                }
+        );
 
 // Uploads related info
         numberOfPhotos = (TextView)findViewById(R.id.go_to_gallery);
@@ -182,6 +203,7 @@ public class ActivityProfile extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(ActivityProfile.this, ActivityModeGallery.class);
+                        finish();
                         startActivity(intent);
                     }
                 }
@@ -194,6 +216,7 @@ public class ActivityProfile extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(ActivityProfile.this, ActivityManageProfile.class); // change settings to managing activity
+                        finish();
                         startActivity(intent);
                     }
                 });
@@ -210,7 +233,7 @@ public class ActivityProfile extends AppCompatActivity {
                     public void onClick(View v) {
                         Intent intent = new Intent(ActivityProfile.this, ActivityUploadPhoto.class);
                         intent.putExtra("Which View", "GalleryMode"); // gallery mode or rating mode
-                        intent.putExtra("Based on", "upload"); // which order to come back to
+                        finish();
                         startActivity(intent);
                     }
                 }
@@ -237,6 +260,7 @@ public class ActivityProfile extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(ActivityProfile.this, ActivityModeGallery.class);
+                        finish();
                         startActivity(intent);
                     }
                 }
@@ -249,6 +273,7 @@ public class ActivityProfile extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(ActivityProfile.this, ActivitySettings.class);
+                        finish();
                         startActivity(intent);
                     }
                 }

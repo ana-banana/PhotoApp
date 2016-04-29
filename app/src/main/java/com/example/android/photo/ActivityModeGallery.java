@@ -83,6 +83,7 @@ public class ActivityModeGallery extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(ActivityModeGallery.this, ActivityUploadPhoto.class);
+                        finish();
                         startActivity(intent);
                     }
                 }
@@ -107,6 +108,7 @@ public class ActivityModeGallery extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(ActivityModeGallery.this, ActivitySettings.class);
+                        finish();
                         startActivity(intent);
                     }
                 }
@@ -119,6 +121,7 @@ public class ActivityModeGallery extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(ActivityModeGallery.this, ActivityProfile.class);
+                        finish();
                         startActivity(intent);
                     }
                 }

@@ -178,6 +178,7 @@ public class ActivitySettings extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(ActivitySettings.this, ActivityUploadPhoto.class);
+                        finish();
                         startActivity(intent);
                     }
                 }
@@ -190,6 +191,7 @@ public class ActivitySettings extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(ActivitySettings.this, ActivityModeGallery.class);
+                        finish();
                         startActivity(intent);
 
                     }
@@ -203,6 +205,7 @@ public class ActivitySettings extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(ActivitySettings.this, ActivitySettings.class);
+                        finish();
                         startActivity(intent);
                     }
                 }
@@ -215,6 +218,7 @@ public class ActivitySettings extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(ActivitySettings.this, ActivityProfile.class);
+                        finish();
                         startActivity(intent);
                     }
                 }
