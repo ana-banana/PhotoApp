@@ -40,7 +40,6 @@ public class ActivityMain extends Activity {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(ActivityMain.this, ActivityModeGallery.class);
-                        intent.putExtra("Based on", "upload");
                         startActivity(intent);
                     }
                 }

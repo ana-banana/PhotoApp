@@ -2,9 +2,14 @@ package com.example.android.photo;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,6 +20,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -22,15 +28,21 @@ import java.util.ArrayList;
 
 public class ActivitySettings extends AppCompatActivity {
 
+    private PhotoModel model;
+
     ImageButton addNewPhotoButton; // Button to add new photos, launches ActivityUploadPhoto
     ImageButton galleryModeButton; // Button to switch to Gallery mode, launches ActivityModelGallery
     ImageButton infoModeButton; // Button to switch to Information mode, launches ActivityModelInfo
     ImageButton settingsButton; // Button to switch to ActivitySettings
     ImageButton toProfileButton; // Button to switch to user's profile
 
-    String order; /* stores current order of showing images: based on upload/ratings;
-                      useful to know what order to come back to from side activities */
-
+    private ProgressBar progressBar;
+    Handler handler = new Handler(){
+        public void handleMessage(Message m){
+            Intent intent = new Intent(ActivitySettings.this, ActivityModeGallery.class);
+            startActivity(intent);
+        }
+    };
 
     public class SettingsRow {
         private String settingsDescription;
@@ -82,6 +94,7 @@ public class ActivitySettings extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        model = PhotoModel.getInstance();
         setContentView(R.layout.activity_settings);
         Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar_as);
         setSupportActionBar(toolbar);
@@ -103,9 +116,11 @@ public class ActivitySettings extends AppCompatActivity {
 
         // Setting Rows data
         ArrayList<SettingsRow> settingsRows = new ArrayList<SettingsRow>();
+        // image and text for "reset gallery" option
         settingsRows.add(new SettingsRow("Reset Gallery. Delete all uploads and set defaults", R.drawable.reset_gallery_settings));
+        // image and text for managing profile option
         settingsRows.add(new SettingsRow("Manage your profile", R.drawable.profile_picture_settings));
-        final PhotoModel model = PhotoModel.getInstance();
+        //image and text for changing order option
         if (model.getOrder()) { // order based on upload
             settingsRows.add(new SettingsRow("Switch to showing images based on ratings", R.drawable.basedonrating));
         } else {
@@ -123,8 +138,11 @@ public class ActivitySettings extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
                 switch (position) {
                     case 0: // reset
+                        Thread myThread = new Thread(new ResetGalleryThread());
+                        myThread.start();
+                        break;
                     case 1: // manage profile
-                        Intent intent1 = new Intent(ActivitySettings.this, ActivityProfile.class);
+                        Intent intent1 = new Intent(ActivitySettings.this, ActivityManageProfile.class);
                         startActivity(intent1);
                         break;
                     case 2: // changing the order
@@ -144,6 +162,8 @@ public class ActivitySettings extends AppCompatActivity {
             }
         });
 
+        progressBar = (ProgressBar)findViewById(R.id.progress_bar_settings);
+
         // Button for adding new photos and its listener
         addNewPhotoButton = (ImageButton) findViewById(R.id.imageButtonAddPhoto);
         addNewPhotoButton.setOnClickListener(
@@ -151,15 +171,13 @@ public class ActivitySettings extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(ActivitySettings.this, ActivityUploadPhoto.class);
-                        intent.putExtra("Which View", "GalleryMode"); // gallery mode or rating mode
-                        intent.putExtra("Based on", "upload"); // which order to come back to
                         startActivity(intent);
                     }
                 }
         );
 
 /*
-        // Button for switching to ratings mode and its listener
+        // Button for switching to information mode and its listener
         infoModeButton = (ImageButton) findViewById(R.id.imageButtonRating);
         infoModeButton.setOnClickListener(
                 new View.OnClickListener() {
@@ -178,7 +196,6 @@ public class ActivitySettings extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(ActivitySettings.this, ActivityModeGallery.class);
-                        intent.putExtra("Based on", "upload"); // which order to come back
                         startActivity(intent);
 
                     }
@@ -186,17 +203,12 @@ public class ActivitySettings extends AppCompatActivity {
         );
 
 
-        // Button to reset the gallery (delete all the uploaded photos, set defaults) and its listener
+        // Button to switch to settings activity
         settingsButton = (ImageButton) findViewById(R.id.imageButtonSettings);
         settingsButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //    PhotoModel model = PhotoModel.getInstance();
-                        //    model.resetPhotoModel();
-                        //    Intent intent = getIntent();
-                        //    finish();
-                        //    startActivity(intent);
                         Intent intent = new Intent(ActivitySettings.this, ActivitySettings.class);
                         startActivity(intent);
                     }
@@ -216,34 +228,33 @@ public class ActivitySettings extends AppCompatActivity {
         );
 
     }
-/*
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-*/
-/*    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        if (id == R.id.action_manage_profile) {
-            Intent intentRules = new Intent(this, ActivityProfile.class);
-            //intentRules.putExtra("Message", "Do not let the ball drop by bouncing it off the paddle.");
-            startActivity(intentRules);
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+
+    public void resetGallery() {
+        model.resetPhotoModel();
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                progressBar.setVisibility(View.GONE); // to hide progress bar when finished
+            }
+        });
+
     }
-*/
+
+    public class ResetGalleryThread implements Runnable {
+        @Override
+        public void run() {
+            ActivitySettings.this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() { // runs on the main thread
+                    progressBar.setVisibility(View.VISIBLE);
+                }
+            });
+            resetGallery();
+            handler.sendEmptyMessage(1);
+        }
+    }
+
 }
 
 

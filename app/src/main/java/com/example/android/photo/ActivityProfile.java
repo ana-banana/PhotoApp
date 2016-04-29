@@ -23,26 +23,23 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class ActivityProfile extends Activity {
+public class ActivityProfile extends AppCompatActivity {
 
     TextView profileName; // name of the user
     TextView numberOfFriends; // how many friends has the user
+    TextView numberOfPhotos; // how many photos did user uploaded
 
     ImageView profilePhoto; // photo of the user
 
     GridView usersFriends; // photos and names of user's friends
 
-    ImageView seeGallery;
-    ImageView manageProfile;
+    ImageView seeGallery; // "button" to get back to the gallery
 
-    //ImageButton addNewPhotoButton; // Button to add new photos, launches ActivityUploadPhoto
-    //ImageButton galleryModeButton; // Button to switch to Gallery mode, launches ActivityModelGallery
-    //ImageButton infoModeButton; // Button to switch to Information mode, launches ActivityModelInfo
-    //ImageButton settingsButton; // Button to switch to ActivitySettings
-    //ImageButton toProfileButton; // Button to switch to user's profile
-
-    String order; /* stores current order of showing images: based on upload/ratings;
-                      useful to know what order to come back to from side activities */
+    ImageButton addNewPhotoButton; // Button to add new photos, launches ActivityUploadPhoto
+    ImageButton galleryModeButton; // Button to switch to Gallery mode, launches ActivityModelGallery
+    ImageButton infoModeButton; // Button to switch to Information mode, launches ActivityModelInfo
+    ImageButton settingsButton; // Button to switch to ActivitySettings
+    ImageButton toProfileButton; // Button to switch to user's profile
 
     public class FriendsGrid {
         private String friendName;
@@ -96,8 +93,12 @@ public class ActivityProfile extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile_content);
-        /*Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar_ap);
+        setContentView(R.layout.activity_profile);
+
+        ProfileModel profile = ProfileModel.getInstance();
+        // set profile specific information
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar_ap);
         setSupportActionBar(toolbar);
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         // to set a custom action bar:
@@ -113,10 +114,8 @@ public class ActivityProfile extends Activity {
         android.support.v7.app.ActionBar.LayoutParams params = new android.support.v7.app.ActionBar.LayoutParams(
                 android.support.v7.app.ActionBar.LayoutParams.MATCH_PARENT,
                 android.support.v7.app.ActionBar.LayoutParams.MATCH_PARENT);
-        actionBar.setCustomView(vAction, params); */
+        actionBar.setCustomView(vAction, params);
 
-        ProfileModel profile = ProfileModel.getInstance();
-        // set profile specific information
         profileName = (TextView) findViewById(R.id.profile_name);
         profileName.setText(profile.myProfile.getProfName());
         numberOfFriends = (TextView) findViewById(R.id.how_many_friends);
@@ -124,6 +123,14 @@ public class ActivityProfile extends Activity {
         numberOfFriends.setText(howManyFriends);
         profilePhoto = (ImageView) findViewById(R.id.my_profile_photo);
         profilePhoto.setImageBitmap(profile.myProfile.getProfPicture());
+
+        numberOfPhotos = (TextView)findViewById(R.id.go_to_gallery);
+        PhotoModel model = PhotoModel.getInstance();
+        String plural = " photo";
+        int uploaded = model.uploadedPhotos;
+        if (uploaded != 1) {plural = " photos";}
+        String numPhotos = "You uploaded " + String.valueOf(model.uploadedPhotos) + plural;
+        numberOfPhotos.setText(numPhotos);
 
         // set friends gridView
         ArrayList<FriendsGrid> friendsGrids = new ArrayList<FriendsGrid>();
@@ -146,41 +153,27 @@ public class ActivityProfile extends Activity {
             }
         });
 
-        seeGallery = (ImageView)findViewById(R.id.imageViewMyPhotos);
+        seeGallery = (ImageView) findViewById(R.id.imageViewMyPhotos);
         seeGallery.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(ActivityProfile.this, ActivityModeGallery.class);
-                        intent.putExtra("Based on", "upload"); // which order to come back to
                         startActivity(intent);
                     }
                 }
         );
 
-        LinearLayout manage = (LinearLayout)findViewById(R.id.profile_button_manage);
+        LinearLayout manage = (LinearLayout) findViewById(R.id.profile_button_manage);
         manage.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(ActivityProfile.this, ActivitySettings.class); // change settings to managing activity
+                        Intent intent = new Intent(ActivityProfile.this, ActivityManageProfile.class); // change settings to managing activity
                         startActivity(intent);
                     }
-        });
-        /*
-        manageProfile = (ImageView)findViewById(R.id.imageViewManageProfile);
-        manageProfile.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(ActivityProfile.this, ActivitySettings.class); // change settings to managing activity
-                        startActivity(intent);
-                    }
-                }
-        ); */
-    }
-}
-/*
+                });
+
         // Button for adding new photos and its listener
         addNewPhotoButton = (ImageButton) findViewById(R.id.imageButtonAddPhoto);
         addNewPhotoButton.setOnClickListener(
@@ -194,8 +187,7 @@ public class ActivityProfile extends Activity {
                     }
                 }
         );
-*/
-/*
+
         // Button for switching to ratings mode and its listener
         infoModeButton = (ImageButton) findViewById(R.id.imageButtonRating);
         infoModeButton.setOnClickListener(
@@ -208,8 +200,7 @@ public class ActivityProfile extends Activity {
                     }
                 }
         );
-*/
-/*
+
         galleryModeButton = (ImageButton) findViewById(R.id.imageButtonGridView);
         galleryModeButton.setOnClickListener(
                 new View.OnClickListener() {
@@ -221,25 +212,19 @@ public class ActivityProfile extends Activity {
                     }
                 }
         );
-*/
-/*
-        // Button to reset the gallery (delete all the uploaded photos, set defaults) and its listener
+
+        // Button to switch to settings activity
         settingsButton = (ImageButton) findViewById(R.id.imageButtonSettings);
         settingsButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //    PhotoModel model = PhotoModel.getInstance();
-                        //    model.resetPhotoModel();
-                        //    Intent intent = getIntent();
-                        //    finish();
-                        //    startActivity(intent);
                         Intent intent = new Intent(ActivityProfile.this, ActivitySettings.class);
                         startActivity(intent);
                     }
                 }
         );
-*/
+
 /*
         // Button to go to user's profile
         toProfileButton = (ImageButton) findViewById(R.id.imageButtonProfile);
@@ -255,36 +240,6 @@ public class ActivityProfile extends Activity {
 
     }
 */
-/*
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
     }
-*/
-/*
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            Intent intentSettings = new Intent(this, ActivitySettings.class);
-            startActivity(intentSettings);
-            return true;
-        }
-        if (id == R.id.action_manage_profile) {
-            Intent intentRules = new Intent(this, ActivityProfile.class);
-            //intentRules.putExtra("Message", "Do not let the ball drop by bouncing it off the paddle.");
-            startActivity(intentRules);
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-*/
-
+}
 

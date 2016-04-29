@@ -5,21 +5,21 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
+import android.widget.TextView;
 
 
-public class ActivityUploadPhoto extends AppCompatActivity implements View.OnClickListener {
+public class ActivityManageProfile extends AppCompatActivity {
 
     private static final int RESULT_LOAD_IMAGE = 1;
 
@@ -29,32 +29,24 @@ public class ActivityUploadPhoto extends AppCompatActivity implements View.OnCli
     ImageButton settingsButton; // Button to switch to ActivitySettings
     ImageButton toProfileButton; // Button to switch to user's profile
 
-    ImageView imageToUpload;
-    ImageButton uploadImage;
-    EditText uploadImageName;
+    ImageButton save; // to save changes
+    ImageView manageProfPic;
+    EditText manageName;
+    TextView notification;
 
-    private ProgressBar progressBar;
-    Handler handler = new Handler(){
-        public void handleMessage(Message m){
-            Intent intent = new Intent(ActivityUploadPhoto.this, ActivityModeGallery.class);
-            startActivity(intent);
-        }
-    };
+    boolean changedPicture = false;
+    boolean changedName = false;
+    Bitmap newPicture;
+    String newName;
 
-    String uploasImageNameStr;
-    boolean chose = false;
-
-    PhotoInfo newPhoto;
-    PhotoModel model;
-
-    boolean cklicked = false;
+    ProfileModel profile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_upload_photo);
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar_aup);
+        profile = ProfileModel.getInstance();
+        setContentView(R.layout.activity_manage_profile);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar_amp);
         setSupportActionBar(toolbar);
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         // to set a custom action bar:
@@ -72,17 +64,6 @@ public class ActivityUploadPhoto extends AppCompatActivity implements View.OnCli
                 android.support.v7.app.ActionBar.LayoutParams.MATCH_PARENT);
         actionBar.setCustomView(vAction, params);
 
-        imageToUpload = (ImageView) findViewById(R.id.imageToUpload);
-        uploadImage = (ImageButton) findViewById(R.id.uploadImage);
-        uploadImageName = (EditText) findViewById(R.id.editTextUploadName);
-
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        progressBar.setVisibility(View.GONE);
-
-        model = PhotoModel.getInstance();
-
-        imageToUpload.setOnClickListener(this);
-        uploadImage.setOnClickListener(this);
 
         // Button for adding new photos and its listener
         addNewPhotoButton = (ImageButton) findViewById(R.id.imageButtonAddPhoto);
@@ -90,7 +71,7 @@ public class ActivityUploadPhoto extends AppCompatActivity implements View.OnCli
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(ActivityUploadPhoto.this, ActivityUploadPhoto.class);
+                        Intent intent = new Intent(ActivityManageProfile.this, ActivityUploadPhoto.class);
                         //intent.putExtra("Which View", "GalleryMode"); // gallery mode or rating mode
                         //intent.putExtra("Based on", "upload"); // which order to come back to
                         startActivity(intent);
@@ -99,7 +80,7 @@ public class ActivityUploadPhoto extends AppCompatActivity implements View.OnCli
         );
 
 /*
-        // Button for switching to info mode and its listener
+        // Button for switching to ratings mode and its listener
         infoModeButton = (ImageButton) findViewById(R.id.imageButtonRating);
         infoModeButton.setOnClickListener(
                 new View.OnClickListener() {
@@ -117,7 +98,7 @@ public class ActivityUploadPhoto extends AppCompatActivity implements View.OnCli
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(ActivityUploadPhoto.this, ActivityModeGallery.class);
+                        Intent intent = new Intent(ActivityManageProfile.this, ActivityModeGallery.class);
                         intent.putExtra("Based on", "upload"); // which order to come back
                         startActivity(intent);
 
@@ -125,13 +106,14 @@ public class ActivityUploadPhoto extends AppCompatActivity implements View.OnCli
                 }
         );
 
+
         // Button to switch to settings activity
         settingsButton = (ImageButton) findViewById(R.id.imageButtonSettings);
         settingsButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(ActivityUploadPhoto.this, ActivitySettings.class);
+                        Intent intent = new Intent(ActivityManageProfile.this, ActivitySettings.class);
                         startActivity(intent);
                     }
                 }
@@ -143,67 +125,76 @@ public class ActivityUploadPhoto extends AppCompatActivity implements View.OnCli
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(ActivityUploadPhoto.this, ActivityProfile.class);
+                        Intent intent = new Intent(ActivityManageProfile.this, ActivityProfile.class);
                         startActivity(intent);
                     }
                 }
         );
-    }
 
+        // Text view to notify that changes are saved
+        notification = (TextView)findViewById(R.id.textSavedChanges);
 
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.imageToUpload: // onClick to chose an image to upload
-                // allows a gallery to be open:
-                Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE);
-                // "forResult" part allows to get back after you select an image
-                chose = true; // confirms that user chose a photo to upload
-                uploadImageName.setVisibility(View.VISIBLE);
-                uploadImage.setVisibility(View.VISIBLE);
-                break;
-            case R.id.uploadImage: // onClick for "Upload me!" button
-                Log.d("Uploading", "I called the listener");
-                if ((!cklicked) && chose){
-                    cklicked = true;
-                    uploadImageName.setVisibility(View.GONE);
-                    uploadImage.setVisibility(View.GONE);
-                    Thread myThread = new Thread(new UploadImageThread());
-                    myThread.start();
+        //ImageView for the profile picture
+        manageProfPic = (ImageView)findViewById(R.id.my_profile_photo_manage);
+        manageProfPic.setImageBitmap(profile.myProfile.getProfPicture());
+        manageProfPic.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent managePicIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        startActivityForResult(managePicIntent, RESULT_LOAD_IMAGE);
+                        changedPicture = true;
+                        notification.setVisibility(View.GONE);
+                        save.setVisibility(View.VISIBLE);
+                    }
                 }
-                break;
-        }
-    }
+        );
 
-    public void uploadMyImage() {
-        Log.d("Threads", "Called uploadMyImage");
-        Bitmap myPictureUploading = ((BitmapDrawable) imageToUpload.getDrawable()).getBitmap();
-        uploasImageNameStr = uploadImageName.getText().toString();
-        newPhoto = new PhotoInfo(myPictureUploading, uploasImageNameStr);
-        model.addNewPhoto(newPhoto);
-        this.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                progressBar.setVisibility(View.GONE); // to hide progress bar when finished
+        // EditText view for the profile name
+        manageName = (EditText)findViewById(R.id.edit_profile_name_manage);
+        manageName.setHint(profile.myProfile.getProfName());
+       // manageName.setOnTouchListener(new View.OnTouchListener() {
+       //     @Override
+       //     public boolean onTouch(View v, MotionEvent event) {
+       //         manageName.setText("");
+       //         return false;
+       //     }
+       // });
+        manageName.addTextChangedListener(
+                new TextWatcher() {
+                    public void afterTextChanged(Editable s) {
+                        changedName = true;
+                        newName = manageName.getText().toString();
+                        notification.setVisibility(View.GONE);
+                        save.setVisibility(View.VISIBLE);
             }
-        });
-
-    }
-
-    public class UploadImageThread implements Runnable {
-        @Override
-        public void run() {
-            ActivityUploadPhoto.this.runOnUiThread(new Runnable() {
-                @Override
-                public void run() { // runs on the main thread
-                    progressBar.setVisibility(View.VISIBLE);
-                }
-            });
-            uploadMyImage();
-            handler.sendEmptyMessage(1);
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
         }
+        );
+
+
+        // Image button to save changes
+        save = (ImageButton)findViewById(R.id.imageButtonSaveChanges);
+        save.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (changedName) {
+                            profile.myProfile.setProfName(newName);
+                        }
+                        if (changedPicture) {
+                            newPicture = ((BitmapDrawable) manageProfPic.getDrawable()).getBitmap();
+                            profile.myProfile.setProfPicture(newPicture);
+                        }
+                        save.setVisibility(View.GONE); // hide button for saving changes when done saving
+                        notification.setVisibility(View.VISIBLE); // show notification that changes saved
+                    }
+                }
+        );
+
     }
 
     // get called when a user has selected a picture from the gallery:
@@ -213,7 +204,8 @@ public class ActivityUploadPhoto extends AppCompatActivity implements View.OnCli
         // to make sure it's the image we want and somethis was actually selected:
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null) {
             Uri selectedImage = data.getData(); // uniform resource identifier
-            imageToUpload.setImageURI(selectedImage);
+            manageProfPic.setImageURI(selectedImage);
+            save.setVisibility(View.VISIBLE); // make button for saving changes visible
         }
     }
 

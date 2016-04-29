@@ -8,10 +8,10 @@ import android.widget.GridView;
 import android.widget.ImageView;
 
 public class ImageAdapterGalleryRating extends BaseAdapter {
-    private static int max = 8;
+    private static int max;
     private Context mContext;
     private static ImageAdapterGalleryRating mInstance;
-    private Bitmap[] mThumbIds = new Bitmap[max];
+    private Bitmap[] mThumbIds;
 
 
     public static ImageAdapterGalleryRating getInstance(Context c, PhotoModel model) {
@@ -26,6 +26,8 @@ public class ImageAdapterGalleryRating extends BaseAdapter {
     public ImageAdapterGalleryRating(Context c, PhotoModel model) {
         mContext = c;
         //this.def = def;
+        max = model.maxPhotos;
+        mThumbIds = new Bitmap[max];
         Bitmap[] update = model.getBitmapsRating();
         for (int i = 0; i < max; i++) {
             mThumbIds[i] = update[i];

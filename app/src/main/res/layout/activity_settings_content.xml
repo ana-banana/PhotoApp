@@ -32,6 +32,17 @@
         android:id="@+id/activity_settings_listView"
         android:layout_marginBottom="15dp"/>
 
+    <ProgressBar
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progress_bar_settings"
+        android:layout_centerVertical="true"
+        android:progressDrawable="@drawable/circular_progress_view"
+        android:visibility="gone"
+        android:indeterminateTint="#E6E6FA"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"/>
 
 
 </LinearLayout>

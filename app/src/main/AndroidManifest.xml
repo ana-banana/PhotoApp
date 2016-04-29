@@ -19,12 +19,13 @@
         </activity>
 
         <activity android:name=".ActivityMainPhotos" android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
-        <activity android:name=".ActivityProfile" />
+        <activity android:name=".ActivityProfile" android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity android:name=".ActivitySettings" android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
-        <activity android:name=".ActivityUploadPhoto"/>
+        <activity android:name=".ActivityUploadPhoto" android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity android:name=".ActivityModeGallery" android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity android:name=".GalleryViews"/>
         <activity android:name=".ActivityModeInfo" android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <activity android:name=".ActivityManageProfile" android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity android:name=".ActivityOnePhoto"/>
 
     </application>

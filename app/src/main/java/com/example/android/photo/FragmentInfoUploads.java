@@ -51,16 +51,19 @@ public class FragmentInfoUploads extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                if (position >= model.uploadedPhotos) {
+                if (position > model.uploadedPhotos) {
                     Toast.makeText(getContext(), "Sorry, there is no photo here", Toast.LENGTH_SHORT).show();
+                } else if (position == model.uploadedPhotos) {
+                    Intent intent = new Intent(getContext(), ActivityUploadPhoto.class);
+                 //   intent.putExtra("Which View", "GalleryMode"); // gallery mode or rating mode
+                    startActivity(intent);
                 } else {
-                    //InfoModeListRow ratedPhotosRow = (InfoModeListRow) parent.getItemAtPosition(position);
                     Intent intent = new Intent(getContext(), ActivityOnePhoto.class);
                     // you need to inform the ActivityOnePhoto that you want to see photo at this specific position user clicked
                     String pos = String.valueOf(position);
                     intent.putExtra("Which Photo", pos);
-                    intent.putExtra("Based on", "rating");
-                    intent.putExtra("Which View", "RatingsMode");
+                //    intent.putExtra("Based on", "rating");
+                //    intent.putExtra("Which View", "RatingsMode");
                     startActivity(intent);
                 }
             }

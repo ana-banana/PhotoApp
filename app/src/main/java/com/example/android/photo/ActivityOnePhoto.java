@@ -47,27 +47,7 @@ public class ActivityOnePhoto extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.content_one_photo);
-
-       /* Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar_opa);
-        setSupportActionBar(toolbar);
-
-        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
-        assert actionBar != null;
-        actionBar.setDisplayShowHomeEnabled(false);
-        actionBar.setDisplayShowTitleEnabled(false);
-        actionBar.setDisplayShowCustomEnabled(true);
-
-        View vAction = LayoutInflater
-                .from(actionBar.getThemedContext())
-                .inflate(R.layout.action_bar_one_photo, null);
-        android.support.v7.app.ActionBar.LayoutParams params = new android.support.v7.app.ActionBar.LayoutParams(
-                android.support.v7.app.ActionBar.LayoutParams.MATCH_PARENT,
-                android.support.v7.app.ActionBar.LayoutParams.MATCH_PARENT);
-        actionBar.setCustomView(vAction, params);
-
-        //actionBar.setCustomView(R.layout.action_bar_one_photo); */
 
         Bundle extras = getIntent().getExtras();
        // backToView = extras.getString("Which View");
@@ -86,6 +66,7 @@ public class ActivityOnePhoto extends Activity {
             myImage = model.photosByRating[photoNumber].getPictureBit();
             myName = model.photosByRating[photoNumber].getPictureName();
         }
+
         imageToView = (ImageView) findViewById(R.id.imageToView);
         imageToView.setImageBitmap(myImage);
         imageName = (TextView) findViewById(R.id.textViewImageDescription);
@@ -98,17 +79,18 @@ public class ActivityOnePhoto extends Activity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (Objects.equals(backToView, "GalleryMode")) {
+                        Log.d("Button Back", "I called the listener");
+                        //if (Objects.equals(backToView, "GalleryMode")) {
                             String modelState = "Model byRating when backButton is " + model.byRating;
                             Log.d(TAG, modelState);
                             Intent intent = new Intent(ActivityOnePhoto.this, ActivityModeGallery.class);
                            // intent.putExtra("Based on", order);
                             startActivity(intent);
-                        } else if (Objects.equals(backToView, "RatingsMode")) {
-                            Intent intent = new Intent(ActivityOnePhoto.this, ActivityModeInfo.class);
+                        //} else if (Objects.equals(backToView, "RatingsMode")) {
+                        //    Intent intent = new Intent(ActivityOnePhoto.this, ActivityModeInfo.class);
                            // intent.putExtra("Based on", order);
-                            startActivity(intent);
-                        }
+                        //    startActivity(intent);
+                        //}
                     }
                 }
         );
@@ -123,7 +105,7 @@ public class ActivityOnePhoto extends Activity {
                             String pos = String.valueOf(photoNumber + 1);
                             intent.putExtra("Which Photo", pos);
                          //   intent.putExtra("Based on", order);
-                            intent.putExtra("Which View", backToView);
+                         //   intent.putExtra("Which View", backToView);
                             finish();
                             startActivity(intent);
                         } else {
@@ -144,7 +126,7 @@ public class ActivityOnePhoto extends Activity {
                             String pos = String.valueOf(photoNumber - 1);
                             intent.putExtra("Which Photo", pos);
                          //   intent.putExtra("Based on", order);
-                            intent.putExtra("Which View", backToView);
+                           // intent.putExtra("Which View", backToView);
                             finish();
                             startActivity(intent);
                         } else {
@@ -211,6 +193,10 @@ public class ActivityOnePhoto extends Activity {
 
         );
 
+    }
+
+    @Override
+    public void onBackPressed() {
     }
 
 }

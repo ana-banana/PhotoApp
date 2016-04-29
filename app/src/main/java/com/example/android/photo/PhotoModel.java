@@ -1,14 +1,12 @@
 package com.example.android.photo;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.util.Log;
 
 public class PhotoModel {
 
-    final static String TAG = "TEST";
     static PhotoModel mInstance;
     PhotoInfo def;
-    int maxPhotos = 8;
+    int maxPhotos = 16;
 
     PhotoInfo[] myPhotos;
     PhotoInfo[] photosByRating;
@@ -142,6 +140,7 @@ public class PhotoModel {
         if (uploadedPhotos != 0) {
             uploadedPhotos = 0;
         }
+        uploadOrder = true;
         setDefaults(def.getPictureBit());
     }
 

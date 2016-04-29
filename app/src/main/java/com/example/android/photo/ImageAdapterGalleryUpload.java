@@ -8,10 +8,10 @@ import android.widget.GridView;
 import android.widget.ImageView;
 
 public class ImageAdapterGalleryUpload extends BaseAdapter {
-    private static int max = 8;
+    private static int max;
     private Context mContext;
     private static ImageAdapterGalleryUpload mInstance;
-    private Bitmap[] mThumbIds = new Bitmap[max];
+    private Bitmap[] mThumbIds;
 
 
     public static ImageAdapterGalleryUpload getInstance(Context c, PhotoModel model) {
@@ -26,6 +26,8 @@ public class ImageAdapterGalleryUpload extends BaseAdapter {
     public ImageAdapterGalleryUpload(Context c, PhotoModel model) {
         mContext = c;
         //this.def = def;
+        max = model.maxPhotos;
+        mThumbIds = new Bitmap[max];
         Bitmap[] update = model.getBitmapsUpload();
         for (int i = 0; i < max; i++) {
             mThumbIds[i] = update[i];
@@ -60,7 +62,7 @@ public class ImageAdapterGalleryUpload extends BaseAdapter {
             imageView = new ImageView(mContext);
             imageView.setLayoutParams(new GridView.LayoutParams(380, 380));
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            //imageView.setPadding(20, 20, 20, 20);
+            imageView.setPadding(5, 5, 5, 5);
         } else {
             imageView = (ImageView) convertView;
         }

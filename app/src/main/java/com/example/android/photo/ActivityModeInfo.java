@@ -75,7 +75,7 @@ public class ActivityModeInfo extends AppCompatActivity {
                     public void onClick(View v) {
                         Intent intent = new Intent(ActivityModeInfo.this, ActivityUploadPhoto.class);
                         intent.putExtra("Which View", "GalleryMode");
-                        intent.putExtra("Based on", order);
+                        //intent.putExtra("Based on", order);
                         startActivity(intent);
                     }
                 }
@@ -98,23 +98,18 @@ public class ActivityModeInfo extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(ActivityModeInfo.this, ActivityModeGallery.class);
-                        intent.putExtra("Based on", "uploads");
+                        //intent.putExtra("Based on", "uploads");
                         startActivity(intent);
                     }
                 }
         );
 
-        // Button to reset the gallery (delete all the uploaded photos, set defaults) and its listener
+        // Button to switch to settings view
         settingsButton = (ImageButton) findViewById(R.id.imageButtonSettings);
         settingsButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //    PhotoModel model = PhotoModel.getInstance();
-                        //    model.resetPhotoModel();
-                        //    Intent intent = getIntent();
-                        //    finish();
-                        //    startActivity(intent);
                         Intent intent = new Intent(ActivityModeInfo.this, ActivitySettings.class);
                         startActivity(intent);
                     }

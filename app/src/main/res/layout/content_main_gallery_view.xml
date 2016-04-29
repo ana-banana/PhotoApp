@@ -2,7 +2,7 @@
 <RelativeLayout
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="#7593b4"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -13,8 +13,9 @@
         android:stretchMode="columnWidth"
         android:gravity="center"
         android:background="#E6E6FA"
-        android:paddingTop="15dp"
-        android:layout_height="300dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="50dp"
+        android:layout_height="wrap_content"
         android:numColumns="auto_fit"
         android:layout_below="@+id/textView4"
         android:layout_centerHorizontal="true"

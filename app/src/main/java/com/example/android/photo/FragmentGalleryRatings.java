@@ -36,15 +36,19 @@ public class FragmentGalleryRatings extends Fragment implements AdapterView.OnIt
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
         if (parent.getId() == R.id.fragment_gallery_ratings_gridView) {
-            if (position >= model.uploadedPhotos) {
+            if (position > model.uploadedPhotos) {
                 Toast.makeText(getContext(), "Sorry, there is no photo here", Toast.LENGTH_SHORT).show();
+            } else if (position == model.uploadedPhotos) {
+                Intent intent = new Intent(getContext(), ActivityUploadPhoto.class);
+               // intent.putExtra("Which View", "GalleryMode"); // gallery mode or rating mode
+                startActivity(intent);
             } else {
                 // you need to inform the ActivityOnePhoto that you want to see photo at this specific position user clicked
                 Intent intent = new Intent(getContext(), ActivityOnePhoto.class);
                 String pos = String.valueOf(position);
                 intent.putExtra("Which Photo", pos);
-                intent.putExtra("Based on", "rating");
-                intent.putExtra("Which View", "GalleryMode");
+               // intent.putExtra("Based on", "rating");
+               // intent.putExtra("Which View", "GalleryMode");
                 startActivity(intent);
             }
         }

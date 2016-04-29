@@ -10,16 +10,12 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 
 // Activity that controls gallery mode, both for ordering based on upload and based on ratings
 public class ActivityModeGallery extends AppCompatActivity {
-    final static String TAG = "TEST";
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
 
@@ -27,11 +23,6 @@ public class ActivityModeGallery extends AppCompatActivity {
     //ImageButton infoModeButton; // Button to switch to Information mode, launches ActivityModelInfo
     ImageButton settingsButton; // Button to switch to ActivitySettings
     ImageButton toProfileButton; // Button to switch to user's profile
-
-    String order; /* stores current order of showing images: based on upload/ratings;
-                      useful to know what order to come back to from side activities */
-
-    String startOrder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,10 +57,6 @@ public class ActivityModeGallery extends AppCompatActivity {
         //tabLayout.getTabAt(0).setIcon(R.drawable.basedonupload);
         //tabLayout.getTabAt(1).setIcon(R.drawable.star);
 
-       // Bundle extra = getIntent().getExtras();
-       // startOrder = extra.getString("Based on");
-       // Log.d(TAG, startOrder);
-
         // Button for adding new photos and its listener
         addNewPhotoButton = (ImageButton) findViewById(R.id.imageButtonAddPhoto);
         addNewPhotoButton.setOnClickListener(
@@ -77,29 +64,11 @@ public class ActivityModeGallery extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(ActivityModeGallery.this, ActivityUploadPhoto.class);
-                      //  intent.putExtra("Which View", "GalleryMode"); // gallery mode or rating mode
-                      //  String lodTag = "Order when call addNewPhoto is " + order;
-                      //  Log.d(TAG, lodTag);
-                      //  intent.putExtra("Based on", order); // which order to come back to
                         startActivity(intent);
                     }
                 }
         );
 
-/*
-        // Button for switching to ratings mode and its listener
-        infoModeButton = (ImageButton) findViewById(R.id.imageButtonRating);
-        infoModeButton.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(ActivityModeGallery.this, ActivityModeInfo.class);
-                     //   intent.putExtra("Based on", "rating"); // which order to come back
-                        startActivity(intent);
-                    }
-                }
-        );
-*/
 
       /*  ImageButton galleryViewButton = (ImageButton) findViewById(R.id.imageButtonGridView);
         galleryViewButton.setOnClickListener(
@@ -113,18 +82,12 @@ public class ActivityModeGallery extends AppCompatActivity {
                 }
         ); */
 
-
-        // Button to reset the gallery (delete all the uploaded photos, set defaults) and its listener
+        // Button to switch to settings
         settingsButton = (ImageButton) findViewById(R.id.imageButtonSettings);
         settingsButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                    //    PhotoModel model = PhotoModel.getInstance();
-                    //    model.resetPhotoModel();
-                    //    Intent intent = getIntent();
-                    //    finish();
-                    //    startActivity(intent);
                         Intent intent = new Intent(ActivityModeGallery.this, ActivitySettings.class);
                         startActivity(intent);
                     }
@@ -143,6 +106,10 @@ public class ActivityModeGallery extends AppCompatActivity {
                 }
         );
 
+    }
+
+    @Override
+    public void onBackPressed() {
     }
 
     // to return a fragment corresponding to one of the tabs.
