@@ -8,9 +8,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-
 import java.util.ArrayList;
 
+// Adapter for the list view in the gallery ("Details" tab)
 
 public class ImageAdapterForInfoMode extends ArrayAdapter<InfoModeListRow> {
     private Context mContext;

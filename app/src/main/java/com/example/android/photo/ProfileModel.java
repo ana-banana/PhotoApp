@@ -1,22 +1,21 @@
 package com.example.android.photo;
 import android.util.Log;
-
 import java.util.ArrayList;
+
+// Model that stores all information related to the profile
 
 public class ProfileModel {
 
     static ProfileModel mInstance;
     ProfileInfo myProfile; // holds user's own profile information
-    ArrayList<ProfileInfo> friends; // holds user's friends profile information
-    int numberOfFriends;
-
+    ArrayList<ProfileInfo> friends; // holds user's friends profile information (name & picture)
+    int numberOfFriends; // how many friends does the user have
 
     public static ProfileModel getInstance() {
         if (mInstance != null) {
             return mInstance;
         } else {
             mInstance = new ProfileModel();
-            Log.d("Profile", "I've created profile");
             return mInstance;
         }
     }

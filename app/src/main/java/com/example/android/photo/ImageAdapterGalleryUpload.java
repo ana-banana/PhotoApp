@@ -7,12 +7,13 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+// Adapter for the grid view in the gallery displaying photos in order based on images upload time
+
 public class ImageAdapterGalleryUpload extends BaseAdapter {
-    private static int max;
+    private static int max;  // max number of photos
     private Context mContext;
     private static ImageAdapterGalleryUpload mInstance;
-    private Bitmap[] mThumbIds;
-
+    private Bitmap[] mThumbIds; // bitmaps to display
 
     public static ImageAdapterGalleryUpload getInstance(Context c, PhotoModel model) {
         if (mInstance != null) {
@@ -25,16 +26,15 @@ public class ImageAdapterGalleryUpload extends BaseAdapter {
 
     public ImageAdapterGalleryUpload(Context c, PhotoModel model) {
         mContext = c;
-        //this.def = def;
-        max = model.maxPhotos;
+        max = model.maxPhotos; // as set in the model
         mThumbIds = new Bitmap[max];
-        Bitmap[] update = model.getBitmapsUpload();
+        Bitmap[] update = model.getBitmapsUpload(); // get bitmaps from the model
         for (int i = 0; i < max; i++) {
             mThumbIds[i] = update[i];
         }
     }
 
-    // update array of bitmaps
+// update array of bitmaps when something was changed (called from outside)
     public void updateBitmaps(PhotoModel model) {
         Bitmap[] update = model.getBitmapsUpload();
         for (int i = 0; i < max; i++) {
@@ -58,7 +58,6 @@ public class ImageAdapterGalleryUpload extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ImageView imageView;
         if (convertView == null) {
-            // if it's not recycled, initialize some attributes
             imageView = new ImageView(mContext);
             imageView.setLayoutParams(new GridView.LayoutParams(380, 380));
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -67,23 +66,7 @@ public class ImageAdapterGalleryUpload extends BaseAdapter {
             imageView = (ImageView) convertView;
         }
         imageView.setImageBitmap(mThumbIds[position]);
-
-        // imageView.setImageResource(mThumbIds[position]);
         return imageView;
     }
-
-    // references to our images
-    /*private Integer[] mThumbIds = {
-            R.drawable.emptyphoto,
-            R.drawable.emptyphoto,
-            R.drawable.emptyphoto,
-            R.drawable.emptyphoto,
-            R.drawable.emptyphoto,
-            R.drawable.emptyphoto,
-            R.drawable.emptyphoto,
-            R.drawable.emptyphoto
-    }; */
-
-
 
 }

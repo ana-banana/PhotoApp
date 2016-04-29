@@ -1,28 +1,26 @@
 package com.example.android.photo;
-
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
-import android.widget.EditText;
-
 import java.io.ByteArrayOutputStream;
 
-/**
- * Created by andrey on 09/04/2016.
- */
+// Class to store information about one uploaded photo
+
 public class PhotoInfo {
-    private String pictireStr;
-    private Bitmap pictureBit;
-    private String imageName;
-    float rating;
-    int givenRatings;
+
+// ********** PHOTO INFORMATION **********
+    private String pictireStr; // picture saved as a string
+    private Bitmap pictureBit; // picture saved as a bitmap
+    private String imageName; // name of the picture
+    float rating; // overall rating of the picture
+    int givenRatings; // how many ratings were given to the image (how many times rated)
     int posIndexArray; // index in array sorted by ratings
 
+// ********** HELPERS (STRINGS-BITMAPS) **********
     private Bitmap base64ToBitmap(String b64) {
         byte[] imageAsBytes = Base64.decode(b64.getBytes(), Base64.DEFAULT);
         return BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
     }
-
     private String bitmapToBase64(Bitmap bitmap) {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
@@ -30,6 +28,7 @@ public class PhotoInfo {
         return Base64.encodeToString(byteArray, Base64.DEFAULT);
     }
 
+// ********** CONSTRUCTORS **********
     public PhotoInfo () {
         rating = 0;
         givenRatings = 0;
@@ -58,22 +57,16 @@ public class PhotoInfo {
         givenRatings = 0;
     }
 
-    public Bitmap getPictureBit() {
-        return pictureBit;
-    }
+// ********** GETTERS & SETTERS **********
+    public Bitmap getPictureBit() {return pictureBit;}
 
-    public String getPictureStr() {
-        return pictireStr;
-    }
+    public String getPictureStr() {return pictireStr;}
 
-    public String getPictureName() {
-        return imageName;
-    }
+    public String getPictureName() {return imageName;}
 
-    public float getPictureRating() {
-        return rating;
-    }
+    public float getPictureRating() {return rating;}
 
+// To set new overall rating when new rate was given
     public void setRating(float newRating) {
         rating = rating * givenRatings;
         givenRatings ++;

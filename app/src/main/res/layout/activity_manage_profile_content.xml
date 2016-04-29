@@ -90,6 +90,7 @@
                     android:textColor="#7593b4"
                     android:textColorHint="#7593b4"
                     android:layout_gravity="center"
+                    android:singleLine="true"
                     android:id="@+id/edit_profile_name_manage"
                     android:layout_centerVertical="true"
                     android:layout_alignParentLeft="true"

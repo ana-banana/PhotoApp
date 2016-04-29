@@ -6,10 +6,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -20,27 +17,30 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
+
+// Activity to display profile information and navigation to manage it.
 
 public class ActivityProfile extends AppCompatActivity {
 
+// ********** USER PROFILE INFORMATION **********
     TextView profileName; // name of the user
     TextView numberOfFriends; // how many friends has the user
     TextView numberOfPhotos; // how many photos did user uploaded
-
     ImageView profilePhoto; // photo of the user
 
-    GridView usersFriends; // photos and names of user's friends
-
+// ********** NAVIGATION **********
     ImageView seeGallery; // "button" to get back to the gallery
 
+// ********** BUTTONS FOR the ACTION BAR **********
     ImageButton addNewPhotoButton; // Button to add new photos, launches ActivityUploadPhoto
     ImageButton galleryModeButton; // Button to switch to Gallery mode, launches ActivityModelGallery
     ImageButton infoModeButton; // Button to switch to Information mode, launches ActivityModelInfo
     ImageButton settingsButton; // Button to switch to ActivitySettings
-    ImageButton toProfileButton; // Button to switch to user's profile
+    //ImageButton toProfileButton; // Button to switch to user's profile
 
+// ********** FRIENDS GRID **********
+    GridView usersFriends; // photos and names of user's friends
     public class FriendsGrid {
         private String friendName;
         private Bitmap friendPicture;
@@ -67,7 +67,6 @@ public class ActivityProfile extends AppCompatActivity {
         }
 
     }
-
     public class FriendGridAdapter extends ArrayAdapter<FriendsGrid> {
         private Context context;
 
@@ -96,7 +95,10 @@ public class ActivityProfile extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
         ProfileModel profile = ProfileModel.getInstance();
-        // set profile specific information
+
+///////////////////////////////////////////
+// ********** SETTING ACTION BAR **********
+///////////////////////////////////////////
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar_ap);
         setSupportActionBar(toolbar);
@@ -116,31 +118,46 @@ public class ActivityProfile extends AppCompatActivity {
                 android.support.v7.app.ActionBar.LayoutParams.MATCH_PARENT);
         actionBar.setCustomView(vAction, params);
 
+//////////////////////////////////////////
+// ********** VIEWS & LISTENERS **********
+//////////////////////////////////////////
+
+// Profile Name
         profileName = (TextView) findViewById(R.id.profile_name);
         profileName.setText(profile.myProfile.getProfName());
+
+// Friends related info
         numberOfFriends = (TextView) findViewById(R.id.how_many_friends);
         String howManyFriends = "You have " + profile.getStringNumberOfFriends() + " friends";
         numberOfFriends.setText(howManyFriends);
+
+// Profile Picture
         profilePhoto = (ImageView) findViewById(R.id.my_profile_photo);
         profilePhoto.setImageBitmap(profile.myProfile.getProfPicture());
 
+// Uploads related info
         numberOfPhotos = (TextView)findViewById(R.id.go_to_gallery);
         PhotoModel model = PhotoModel.getInstance();
-        String plural = " photo";
+        String plural = " photo"; // photo vs photos
         int uploaded = model.uploadedPhotos;
         if (uploaded != 1) {plural = " photos";}
         String numPhotos = "You uploaded " + String.valueOf(model.uploadedPhotos) + plural;
         numberOfPhotos.setText(numPhotos);
 
-        // set friends gridView
-        ArrayList<FriendsGrid> friendsGrids = new ArrayList<FriendsGrid>();
+/////////////////////////////////////////////////
+// ********** FRIENDS GRIDVIEW SETTING **********
+/////////////////////////////////////////////////
+
+        ArrayList<FriendsGrid> friendsGrids = new ArrayList<FriendsGrid>(); // copy friends here from the profile model
         for (int i = 0; i < profile.getNumberOfFriends(); i++) {
             ProfileInfo thisFriend = profile.friends.get(i);
             friendsGrids.add(new FriendsGrid(thisFriend.getProfName(), thisFriend.getProfPicture()));
         }
-        // Adapter for managing the data
+
+// Adapter for managing the data
         FriendGridAdapter adapter = new FriendGridAdapter(ActivityProfile.this, friendsGrids);
-        // Gridview component to show data
+
+// Gridview component to show data
         usersFriends = (GridView) findViewById(R.id.profile_friends_gridview);
         usersFriends.setAdapter(adapter);
         usersFriends.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -153,6 +170,12 @@ public class ActivityProfile extends AppCompatActivity {
             }
         });
 
+
+///////////////////////////////////
+// ********** NAVIGATION **********
+///////////////////////////////////
+
+// Button that leads to the gallery
         seeGallery = (ImageView) findViewById(R.id.imageViewMyPhotos);
         seeGallery.setOnClickListener(
                 new View.OnClickListener() {
@@ -164,6 +187,7 @@ public class ActivityProfile extends AppCompatActivity {
                 }
         );
 
+// "Button" that leads to the ActivityManageProfile (changing profile information)
         LinearLayout manage = (LinearLayout) findViewById(R.id.profile_button_manage);
         manage.setOnClickListener(
                 new View.OnClickListener() {
@@ -174,7 +198,11 @@ public class ActivityProfile extends AppCompatActivity {
                     }
                 });
 
-        // Button for adding new photos and its listener
+///////////////////////////////////////////////////
+// ********** BUTTONS FOR the ACTION BAR **********
+///////////////////////////////////////////////////
+
+// Button for adding new photos and its listener
         addNewPhotoButton = (ImageButton) findViewById(R.id.imageButtonAddPhoto);
         addNewPhotoButton.setOnClickListener(
                 new View.OnClickListener() {
@@ -188,7 +216,8 @@ public class ActivityProfile extends AppCompatActivity {
                 }
         );
 
-        // Button for switching to ratings mode and its listener
+// Button currently disables
+        /*
         infoModeButton = (ImageButton) findViewById(R.id.imageButtonRating);
         infoModeButton.setOnClickListener(
                 new View.OnClickListener() {
@@ -199,8 +228,9 @@ public class ActivityProfile extends AppCompatActivity {
                         startActivity(intent);
                     }
                 }
-        );
+        ); */
 
+// Button for switching to gallery mode and its listener
         galleryModeButton = (ImageButton) findViewById(R.id.imageButtonGridView);
         galleryModeButton.setOnClickListener(
                 new View.OnClickListener() {
@@ -208,12 +238,11 @@ public class ActivityProfile extends AppCompatActivity {
                     public void onClick(View v) {
                         Intent intent = new Intent(ActivityProfile.this, ActivityModeGallery.class);
                         startActivity(intent);
-
                     }
                 }
         );
 
-        // Button to switch to settings activity
+// Button to switch to settings activity
         settingsButton = (ImageButton) findViewById(R.id.imageButtonSettings);
         settingsButton.setOnClickListener(
                 new View.OnClickListener() {
@@ -224,22 +253,6 @@ public class ActivityProfile extends AppCompatActivity {
                     }
                 }
         );
-
-/*
-        // Button to go to user's profile
-        toProfileButton = (ImageButton) findViewById(R.id.imageButtonProfile);
-        toProfileButton.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(ActivityProfile.this, ActivityProfile.class);
-                        startActivity(intent);
-                    }
-                }
-        );
-
-    }
-*/
     }
 }
 

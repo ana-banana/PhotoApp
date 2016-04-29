@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
+// Fragment that controls gallery grid type displaying based in order based on images upload time
 
 public class FragmentGalleryUploads extends Fragment implements AdapterView.OnItemClickListener {
 
@@ -19,35 +20,29 @@ public class FragmentGalleryUploads extends Fragment implements AdapterView.OnIt
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        //return inflater.inflate(R.layout.main_gallery_view, container, false);
-        View rootView = inflater.inflate(R.layout.fragment_gallery_uploads, container, false);
-        GridView gridView = (GridView) rootView.findViewById(R.id.fragment_gallery_uploads_gridView);
         model = PhotoModel.getInstance();
+        View rootView = inflater.inflate(R.layout.fragment_gallery_uploads, container, false);
+        GridView gridView = (GridView) rootView.findViewById(R.id.fragment_gallery_uploads_gridView); // grid view with photos
         ImageAdapterGalleryUpload currentState = ImageAdapterGalleryUpload.getInstance(getActivity().getApplicationContext(), model);
-
         currentState.updateBitmaps(model);
         gridView.setAdapter(currentState);
         gridView.setOnItemClickListener(this);
-
         return rootView;
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (parent.getId() == R.id.fragment_gallery_uploads_gridView) {
-            if (position > model.uploadedPhotos) {
+            if (position > model.uploadedPhotos) { // empty photo but not the first one
                 Toast.makeText(getContext(), "Sorry, there is no photo here", Toast.LENGTH_SHORT).show();
-            } else if (position == model.uploadedPhotos) {
+            } else if (position == model.uploadedPhotos) { // clicking first empty photo opens an upload photo activity
                 Intent intent = new Intent(getContext(), ActivityUploadPhoto.class);
-               // intent.putExtra("Which View", "GalleryMode"); // gallery mode or rating mode
                 startActivity(intent);
             } else {
                 // you need to inform the ActivityOnePhoto that you want to see photo at this specific position user clicked
                 Intent intent = new Intent(getContext(), ActivityOnePhoto.class);
                 String pos = String.valueOf(position);
-                intent.putExtra("Which Photo", pos);
-              //  intent.putExtra("Based on", "upload");
-              //  intent.putExtra("Which View", "GalleryMode");
+                intent.putExtra("Which Photo", pos); // passes the information about which photo on the grid was clicked
                 startActivity(intent);
             }
         }

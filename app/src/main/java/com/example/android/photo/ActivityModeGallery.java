@@ -15,9 +15,15 @@ import android.view.View;
 import android.widget.ImageButton;
 
 // Activity that controls gallery mode, both for ordering based on upload and based on ratings
+
 public class ActivityModeGallery extends AppCompatActivity {
+
+// ********** SWIPE RELATED **********
+
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
+
+// ********** BUTTONS FOR the ACTION BAR **********
 
     ImageButton addNewPhotoButton; // Button to add new photos, launches ActivityUploadPhoto
     //ImageButton infoModeButton; // Button to switch to Information mode, launches ActivityModelInfo
@@ -28,6 +34,11 @@ public class ActivityModeGallery extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity_photos);
+
+///////////////////////////////////////////
+// ********** SETTING ACTION BAR **********
+///////////////////////////////////////////
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar_mag);
         setSupportActionBar(toolbar);
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
@@ -45,6 +56,10 @@ public class ActivityModeGallery extends AppCompatActivity {
                 android.support.v7.app.ActionBar.LayoutParams.MATCH_PARENT,
                 android.support.v7.app.ActionBar.LayoutParams.MATCH_PARENT);
         actionBar.setCustomView(vAction, params);
+
+///////////////////////////////////////////
+// ********** SETTING TABS **********
+///////////////////////////////////////////
         /* SectionPagerAdapter defined at the end. Adapter that will return a fragment for each of the three
            primary sections of the activity: */
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -57,7 +72,11 @@ public class ActivityModeGallery extends AppCompatActivity {
         //tabLayout.getTabAt(0).setIcon(R.drawable.basedonupload);
         //tabLayout.getTabAt(1).setIcon(R.drawable.star);
 
-        // Button for adding new photos and its listener
+///////////////////////////////////////////////////
+// ********** BUTTONS FOR the ACTION BAR **********
+///////////////////////////////////////////////////
+
+// Button for adding new photos and its listener
         addNewPhotoButton = (ImageButton) findViewById(R.id.imageButtonAddPhoto);
         addNewPhotoButton.setOnClickListener(
                 new View.OnClickListener() {
@@ -68,8 +87,7 @@ public class ActivityModeGallery extends AppCompatActivity {
                     }
                 }
         );
-
-
+// Button is currently disabled
       /*  ImageButton galleryViewButton = (ImageButton) findViewById(R.id.imageButtonGridView);
         galleryViewButton.setOnClickListener(
                 new View.OnClickListener() {
@@ -80,9 +98,9 @@ public class ActivityModeGallery extends AppCompatActivity {
 
                     }
                 }
-        ); */
-
-        // Button to switch to settings
+        );
+*/
+// Button to switch to settings
         settingsButton = (ImageButton) findViewById(R.id.imageButtonSettings);
         settingsButton.setOnClickListener(
                 new View.OnClickListener() {
@@ -94,7 +112,7 @@ public class ActivityModeGallery extends AppCompatActivity {
                 }
         );
 
-        // Button to go to user's profile
+// Button to go to user's profile
         toProfileButton = (ImageButton) findViewById(R.id.imageButtonProfile);
         toProfileButton.setOnClickListener(
                 new View.OnClickListener() {
@@ -108,37 +126,34 @@ public class ActivityModeGallery extends AppCompatActivity {
 
     }
 
+    // TO DISABLE A BACK BUTTON
     @Override
     public void onBackPressed() {
     }
 
-    // to return a fragment corresponding to one of the tabs.
+    // TO RETURN A FRAGMENT CORRESPONDING TO ONE OF THE TABS.
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         PhotoModel model = PhotoModel.getInstance();
-
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
-
-        @TargetApi(Build.VERSION_CODES.KITKAT)
         @Override
-        /* getItem is called to instantiate the fragment for the given page.
-           Return a PlaceholderFragment (defined as a static inner class below). */
+// getItem is called to instantiate the fragment for the given page.
         public Fragment getItem(int position) {
             Fragment fragment = null;
             switch (position) {
                 case 0:
                     if (model.getOrder()) { // order based on upload
                         fragment = new FragmentGalleryUploads();
-                    } else {
+                    } else { // order based on rating
                         fragment = new FragmentGalleryRatings();
                     }
                     break;
                 case 1:
                     if (model.getOrder()) { // order based on upload
                         fragment = new FragmentInfoUploads();
-                    } else {
+                    } else { // order based on rating
                         fragment = new FragmentInfoRatings();
                     }
                     break;
@@ -152,6 +167,7 @@ public class ActivityModeGallery extends AppCompatActivity {
             return 2;
         }
 
+//  TO SET TEXT FOR TABS
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {

@@ -1,11 +1,12 @@
 package com.example.android.photo;
 import android.graphics.Bitmap;
 
+// For list view of the gallery ("Details" tab)
 
 public class InfoModeListRow {
-    private Bitmap photoBitm;
-    private float photoRating;
-    private String photoName;
+    private Bitmap photoBitm; // image itself
+    private float photoRating; // rating of the photo
+    private String photoName; // name of the photo
 
     public InfoModeListRow(Bitmap photoBitm, float photoRating, String photoName) {
         this.photoBitm = photoBitm;

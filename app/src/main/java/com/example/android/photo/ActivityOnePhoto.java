@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -14,33 +13,32 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.Objects;
-
+// Activity to display a photo, to rate it and to submit a rating
 
 public class ActivityOnePhoto extends Activity {
 
+// ********** PHOTO INFORMATION **********
     int photoNumber; //position starts from 0
-    String photoNumStr;
+    String photoNumStr; // for the extra purposes (to communicate between activities
+    Bitmap myImage; // temporary stores an image to display
+    String myName; // temporary stores the name name of the image
+    ImageView imageToView; // image user is looking at
+    TextView imageName; // name of this image
+    TextView overallRating; // overall rating that this image has
+    TextView setRating; // rating that was just set on the rating bar
 
-    Bitmap myImage;
-    String myName;
+// ********** NAVIGATION **********
+    ImageButton backToGalleryButton; // pressing this button returns user to the gallery
+    ImageButton nextPhoto, prevPhoto; // pressing these buttons allows to navigate between photos
 
-    String order;
-    String backToView;
+// ********** RATING **********
+    ImageButton sbmRating; // pressing this button submits the rating set on the rating bar
+    RatingBar ratePhoto; // rating bar to rate the photo
+    String text; // text of notifications about submitted rating
 
-    ImageView imageToView;
-    TextView imageName;
-    TextView yourRating;
-    TextView setRating;
-    ImageButton backToGalleryButton;
-    ImageButton nextPhoto, prevPhoto;
-    ImageButton sbmRating;
-    RatingBar ratePhoto;
-
-    String text;
-
-    PhotoModel model;
-    final static String TAG = "TEST";
+// ********** REUSABLE **********
+    PhotoModel model; // instance of the photo model that stores all the data about images
+    final static String TAG = "TEST"; // debugging/logs
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
     @Override
@@ -50,11 +48,9 @@ public class ActivityOnePhoto extends Activity {
         setContentView(R.layout.content_one_photo);
 
         Bundle extras = getIntent().getExtras();
-       // backToView = extras.getString("Which View");
         model = PhotoModel.getInstance();
-        photoNumStr = extras.getString("Which Photo");
+        photoNumStr = extras.getString("Which Photo"); // shows which photo was clicked on the gridView/listView from the gallery
 
-       // order = extras.getString("Based on");
         try {
             photoNumber = Integer.parseInt(photoNumStr);
         } catch (NumberFormatException nfe) {
@@ -62,10 +58,14 @@ public class ActivityOnePhoto extends Activity {
         if (model.getOrder()) { // based on upload
             myImage = model.myPhotos[photoNumber].getPictureBit();
             myName = model.myPhotos[photoNumber].getPictureName();
-        } else {
+        } else { // based on rating
             myImage = model.photosByRating[photoNumber].getPictureBit();
             myName = model.photosByRating[photoNumber].getPictureName();
         }
+
+//////////////////////////////////////////
+// ********** PHOTO INFO **********
+//////////////////////////////////////////
 
         imageToView = (ImageView) findViewById(R.id.imageToView);
         imageToView.setImageBitmap(myImage);
@@ -74,38 +74,33 @@ public class ActivityOnePhoto extends Activity {
 
         setRating = (TextView) findViewById(R.id.textViewStScore);
 
+///////////////////////////////////
+// ********** NAVIGATION **********
+///////////////////////////////////
+
+// ********** BACK TO THE GALLERY ********** Button sends user back to the gallery activity
         backToGalleryButton = (ImageButton) findViewById(R.id.buttonBackToGallery);
         backToGalleryButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Log.d("Button Back", "I called the listener");
-                        //if (Objects.equals(backToView, "GalleryMode")) {
-                            String modelState = "Model byRating when backButton is " + model.byRating;
-                            Log.d(TAG, modelState);
-                            Intent intent = new Intent(ActivityOnePhoto.this, ActivityModeGallery.class);
-                           // intent.putExtra("Based on", order);
-                            startActivity(intent);
-                        //} else if (Objects.equals(backToView, "RatingsMode")) {
-                        //    Intent intent = new Intent(ActivityOnePhoto.this, ActivityModeInfo.class);
-                           // intent.putExtra("Based on", order);
-                        //    startActivity(intent);
-                        //}
+                        Intent intent = new Intent(ActivityOnePhoto.this, ActivityModeGallery.class);
+                        startActivity(intent);
                     }
                 }
         );
+
+// ********** NEXT BUTTON ********** Button that leads to the next uploaded/rated photo
         nextPhoto = (ImageButton) findViewById(R.id.imageButtonNextPhoto);
         nextPhoto.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (photoNumber < (model.uploadedPhotos - 1)) {
+                        if (photoNumber < (model.uploadedPhotos - 1)) { // if it is not the last photo
                             Intent intent = getIntent();
-                            // you need to inform the ActivityOnePhoto that you want to see photo at this specific position user clicked
+                            // to inform the ActivityOnePhoto that you want to see photo at this specific position user clicked
                             String pos = String.valueOf(photoNumber + 1);
                             intent.putExtra("Which Photo", pos);
-                         //   intent.putExtra("Based on", order);
-                         //   intent.putExtra("Which View", backToView);
                             finish();
                             startActivity(intent);
                         } else {
@@ -115,18 +110,17 @@ public class ActivityOnePhoto extends Activity {
                 }
         );
 
+// ********** PREVIOUS BUTTON ********** Button that leads to the previous uploaded/rated photo
         prevPhoto = (ImageButton) findViewById(R.id.imageButtonPrevPhoto);
         prevPhoto.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (photoNumber > 0) {
+                        if (photoNumber > 0) { // if it is not the first image
                             Intent intent = getIntent();
-                            // you need to inform the ActivityOnePhoto that you want to see photo at this specific position user clicked
+                            // to inform the ActivityOnePhoto that you want to see photo at this specific position user clicked
                             String pos = String.valueOf(photoNumber - 1);
                             intent.putExtra("Which Photo", pos);
-                         //   intent.putExtra("Based on", order);
-                           // intent.putExtra("Which View", backToView);
                             finish();
                             startActivity(intent);
                         } else {
@@ -136,17 +130,24 @@ public class ActivityOnePhoto extends Activity {
                 }
         );
 
-        yourRating = (TextView) findViewById(R.id.textViewYourRating); // accumulative(average) rating of the photo for all previous rating events
+///////////////////////////////////
+// ********** RATING **********
+///////////////////////////////////
+
+// ********** OVERALL RATING OF THE IMAGE ********** accumulative(average) rating of the photo for all previous rating events
+        overallRating = (TextView) findViewById(R.id.textViewYourRating);
         if (model.getOrder()) { // based on upload
             text = "Rating: " + String.valueOf(model.myPhotos[photoNumber].getPictureRating());
-        } else {
+        } else { // based on rating
             text = "Rating: " + String.valueOf(model.photosByRating[photoNumber].getPictureRating());
         }
-        yourRating.setText(text);
+        overallRating.setText(text);
+
+// ********** RATING BAR AND LISTENERS **********
         ratePhoto = (RatingBar) findViewById(R.id.ratingBarImage);
         if (model.getOrder()) { // based on upload
             ratePhoto.setRating(model.myPhotos[photoNumber].getPictureRating());
-        } else {
+        } else { // based on rating
             ratePhoto.setRating(model.photosByRating[photoNumber].getPictureRating());
         }
         ratePhoto.setOnRatingBarChangeListener(
@@ -158,43 +159,40 @@ public class ActivityOnePhoto extends Activity {
                 }
         );
 
-        // Button to submit chosen rating to count it towards average rating of the picture
+// ********** SUBMIT BUTTON ********** Button to submit chosen rating to count it towards average rating of the picture
         sbmRating = (ImageButton) findViewById(R.id.buttonSubmitRating);
         sbmRating.setOnClickListener(
                 new View.OnClickListener() {
                     @TargetApi(Build.VERSION_CODES.KITKAT)
                     @Override
                     public void onClick(View v) {
-
-                        text = "Submitted rating " + String.valueOf(ratePhoto.getRating());
+                        text = "Submitted rating " + String.valueOf(ratePhoto.getRating()); // reads information from the rating bar
                         Toast.makeText(ActivityOnePhoto.this, text, Toast.LENGTH_SHORT).show();
-                        float oldRating = 0;
+                        float oldRating = 0; // stores previous accumulative rating. Need it to know later if rating grows or drops
                         if (model.getOrder()) { // based on upload
                             oldRating = model.myPhotos[photoNumber].getPictureRating();
-                        } else {
+                        } else { // based on rating
                             oldRating = model.photosByRating[photoNumber].getPictureRating();
                         }
-                        float newRating = 0;
-                        if (model.getOrder()) {
-                            model.myPhotos[photoNumber].setRating(ratePhoto.getRating());
+                        float newRating = 0; // stores new accumulative rating
+                        if (model.getOrder()) { // based on upload
+                            model.myPhotos[photoNumber].setRating(ratePhoto.getRating()); // stores new rating in the model
                             newRating = model.myPhotos[photoNumber].getPictureRating();
                             text = "Rating: " + String.valueOf(model.myPhotos[photoNumber].getPictureRating());
-                        } else {
+                        } else { // based on rating
                             model.photosByRating[photoNumber].setRating(ratePhoto.getRating());
                             newRating = model.photosByRating[photoNumber].getPictureRating();
                             text = "Rating: " + String.valueOf(model.photosByRating[photoNumber].getPictureRating());
                         }
-                        yourRating.setText(text);
-
-                        model.resetRatedPhotos(photoNumber, oldRating, newRating); // recount order based on rating
-
+                        overallRating.setText(text);
+                        model.resetRatedPhotos(photoNumber, oldRating, newRating); // recounts order based on rating
                     }
                 }
 
         );
-
     }
 
+// TO DISABLE A BACK BUTTON
     @Override
     public void onBackPressed() {
     }

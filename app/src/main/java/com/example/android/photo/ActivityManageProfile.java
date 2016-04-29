@@ -11,41 +11,49 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
+// Activity where user can change user picture and user name
 public class ActivityManageProfile extends AppCompatActivity {
 
-    private static final int RESULT_LOAD_IMAGE = 1;
+    private static final int RESULT_LOAD_IMAGE = 1; // stores chosen photo
 
+// ********** BUTTONS FOR the ACTION BAR **********
     ImageButton addNewPhotoButton; // Button to add new photos, launches ActivityUploadPhoto
     ImageButton galleryModeButton; // Button to switch to Gallery mode, launches ActivityModelGallery
-    ImageButton infoModeButton; // Button to switch to Information mode, launches ActivityModelInfo
+    //ImageButton infoModeButton; // Button to switch to Information mode, launches ActivityModelInfo
     ImageButton settingsButton; // Button to switch to ActivitySettings
     ImageButton toProfileButton; // Button to switch to user's profile
 
-    ImageButton save; // to save changes
-    ImageView manageProfPic;
-    EditText manageName;
-    TextView notification;
+// ********** VIEWS FROM LAYOUT & RELATED **********
+    ImageButton save; // pressing this button saves the changes
+    ImageView manageProfPic; // shows first the current user picture. By pressing it user can upload new picture
+    EditText manageName; // shows first the current name as a hint. When text is changed saves it into newName
+    TextView notification; // appears when changes have been saved
+    boolean changedPicture = false; // sets to true if new picture was uploaded
+    boolean changedName = false; // sets to true if name was changed
+    Bitmap newPicture; // stores new uploaded picture
+    String newName; // stores new profile name
 
-    boolean changedPicture = false;
-    boolean changedName = false;
-    Bitmap newPicture;
-    String newName;
-
-    ProfileModel profile;
+// ********** REUSABLE **********
+    ProfileModel profile; // an instance of a profile model
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         profile = ProfileModel.getInstance();
+
         setContentView(R.layout.activity_manage_profile);
+
+///////////////////////////////////////////
+// ********** SETTING ACTION BAR **********
+///////////////////////////////////////////
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar_amp);
         setSupportActionBar(toolbar);
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
@@ -64,6 +72,9 @@ public class ActivityManageProfile extends AppCompatActivity {
                 android.support.v7.app.ActionBar.LayoutParams.MATCH_PARENT);
         actionBar.setCustomView(vAction, params);
 
+///////////////////////////////////////////////////
+// ********** BUTTONS FOR the ACTION BAR **********
+///////////////////////////////////////////////////
 
         // Button for adding new photos and its listener
         addNewPhotoButton = (ImageButton) findViewById(R.id.imageButtonAddPhoto);
@@ -79,7 +90,7 @@ public class ActivityManageProfile extends AppCompatActivity {
                 }
         );
 
-/*
+/* //this button and activity are currently disabled
         // Button for switching to ratings mode and its listener
         infoModeButton = (ImageButton) findViewById(R.id.imageButtonRating);
         infoModeButton.setOnClickListener(
@@ -93,19 +104,18 @@ public class ActivityManageProfile extends AppCompatActivity {
                 }
         ); */
 
+        // Button that switched to the gallery mode
         galleryModeButton = (ImageButton) findViewById(R.id.imageButtonGridView);
         galleryModeButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(ActivityManageProfile.this, ActivityModeGallery.class);
-                        intent.putExtra("Based on", "upload"); // which order to come back
                         startActivity(intent);
 
                     }
                 }
         );
-
 
         // Button to switch to settings activity
         settingsButton = (ImageButton) findViewById(R.id.imageButtonSettings);
@@ -131,10 +141,14 @@ public class ActivityManageProfile extends AppCompatActivity {
                 }
         );
 
-        // Text view to notify that changes are saved
+//////////////////////////////////////////
+// ********** VIEWS & LISTENERS **********
+//////////////////////////////////////////
+
+// Text view to notify that changes are saved
         notification = (TextView)findViewById(R.id.textSavedChanges);
 
-        //ImageView for the profile picture
+//ImageView for the profile picture
         manageProfPic = (ImageView)findViewById(R.id.my_profile_photo_manage);
         manageProfPic.setImageBitmap(profile.myProfile.getProfPicture());
         manageProfPic.setOnClickListener(
@@ -150,16 +164,9 @@ public class ActivityManageProfile extends AppCompatActivity {
                 }
         );
 
-        // EditText view for the profile name
+// EditText view for the profile name
         manageName = (EditText)findViewById(R.id.edit_profile_name_manage);
         manageName.setHint(profile.myProfile.getProfName());
-       // manageName.setOnTouchListener(new View.OnTouchListener() {
-       //     @Override
-       //     public boolean onTouch(View v, MotionEvent event) {
-       //         manageName.setText("");
-       //         return false;
-       //     }
-       // });
         manageName.addTextChangedListener(
                 new TextWatcher() {
                     public void afterTextChanged(Editable s) {
@@ -176,7 +183,7 @@ public class ActivityManageProfile extends AppCompatActivity {
         );
 
 
-        // Image button to save changes
+// Image button to save changes
         save = (ImageButton)findViewById(R.id.imageButtonSaveChanges);
         save.setOnClickListener(
                 new View.OnClickListener() {
@@ -197,11 +204,11 @@ public class ActivityManageProfile extends AppCompatActivity {
 
     }
 
-    // get called when a user has selected a picture from the gallery:
+// get called when a user has selected a picture from the gallery:
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        // to make sure it's the image we want and somethis was actually selected:
+        // to make sure it's the image we want and something was actually selected:
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null) {
             Uri selectedImage = data.getData(); // uniform resource identifier
             manageProfPic.setImageURI(selectedImage);
@@ -209,6 +216,7 @@ public class ActivityManageProfile extends AppCompatActivity {
         }
     }
 
+// TO DISABLE A BACK BUTTON
     @Override
     public void onBackPressed() {
     }

@@ -1,11 +1,11 @@
 package com.example.android.photo;
-
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+
+// Class to store information picture and name of one profile
 
 public class ProfileInfo {
-    static ProfileInfo mInstance;
 
+    static ProfileInfo mInstance;
     private Bitmap profPicture; // profile picture uploaded by user
     private String profName; // name set by user
 
