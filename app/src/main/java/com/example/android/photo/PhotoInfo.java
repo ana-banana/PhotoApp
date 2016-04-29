@@ -45,14 +45,14 @@ public class PhotoInfo {
     public PhotoInfo (Bitmap btm, String imageName) {
         this.imageName = imageName;
         pictureBit = btm;
-        pictireStr = bitmapToBase64(pictureBit);
+        pictireStr = ""; //bitmapToBase64(pictureBit);
         rating = 0;
         givenRatings = 0;
     }
 
     public PhotoInfo (Bitmap btm) {
         pictureBit = btm;
-        pictireStr = bitmapToBase64(pictureBit);
+        pictireStr = "";//bitmapToBase64(pictureBit);
         rating = 0;
         givenRatings = 0;
     }

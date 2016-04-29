@@ -44,7 +44,7 @@ public class ActivityUploadPhoto extends AppCompatActivity implements View.OnCli
     EditText uploadImageName; // appears when photo is chosen; here user can give a name to the image
     String uploadImageNameStr;// stores name given to the image as a string
     boolean chose = false; // sets to true if user chose a photo from the device gallery. Prevents overshooting uploads
-    boolean cklicked = false; // sets to true when upload button was clicked and upload process started
+    boolean clicked = false; // sets to true when upload button was clicked and upload process started
     PhotoInfo newPhoto; // will store a new object created with uploaded information
 
 // ********** REUSABLE **********
@@ -202,8 +202,8 @@ public class ActivityUploadPhoto extends AppCompatActivity implements View.OnCli
                 uploadImage.setVisibility(View.VISIBLE); // now can save all the uploaded information
                 break;
             case R.id.uploadImage: // onClick for "Upload me!" button
-                if ((!cklicked) && chose){
-                    cklicked = true;
+                if ((!clicked) && chose){
+                    clicked = true;
                     uploadImageName.setVisibility(View.GONE); // hide naming option
                     uploadImage.setVisibility(View.GONE); // hide saving option
                     Thread myThread = new Thread(new UploadImageThread());
