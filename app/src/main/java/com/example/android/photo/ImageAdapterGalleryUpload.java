@@ -1,6 +1,7 @@
 package com.example.android.photo;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -28,7 +29,7 @@ public class ImageAdapterGalleryUpload extends BaseAdapter {
         mContext = c;
         max = model.maxPhotos; // as set in the model
         mThumbIds = new Bitmap[max];
-        Bitmap[] update = model.getBitmapsUpload(); // get bitmaps from the model
+        Bitmap[] update = model.getSmallBitmapsUpload(); // get bitmaps from the model
         for (int i = 0; i < max; i++) {
             mThumbIds[i] = update[i];
         }
@@ -36,7 +37,7 @@ public class ImageAdapterGalleryUpload extends BaseAdapter {
 
 // update array of bitmaps when something was changed (called from outside)
     public void updateBitmaps(PhotoModel model) {
-        Bitmap[] update = model.getBitmapsUpload();
+        Bitmap[] update = model.getSmallBitmapsUpload();
         for (int i = 0; i < max; i++) {
             mThumbIds[i] = update[i];
         }
@@ -47,11 +48,11 @@ public class ImageAdapterGalleryUpload extends BaseAdapter {
     }
 
     public Object getItem(int position) {
-        return null;
+        return mThumbIds[position];
     }
 
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     // create a new ImageView for each item referenced by the Adapter
@@ -60,7 +61,7 @@ public class ImageAdapterGalleryUpload extends BaseAdapter {
         if (convertView == null) {
             imageView = new ImageView(mContext);
             imageView.setLayoutParams(new GridView.LayoutParams(380, 380));
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
             imageView.setPadding(5, 5, 5, 5);
         } else {
             imageView = (ImageView) convertView;

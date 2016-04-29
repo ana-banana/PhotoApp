@@ -38,7 +38,7 @@ public class FragmentInfoRatings extends Fragment  {
 // ********** UTILS **********
 //////////////////////////////
         update = new Bitmap[maxPhotos];
-        update = model.getBitmapsRating();
+        update = model.getSmallBitmapsRating();
         updateRatings = new float[maxPhotos];
         updateRatings = model.getPictureRatingsRating();
         updateNames = new String[maxPhotos];

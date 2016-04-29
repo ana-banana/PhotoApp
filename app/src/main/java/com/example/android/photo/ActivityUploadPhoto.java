@@ -34,6 +34,7 @@ public class ActivityUploadPhoto extends AppCompatActivity implements View.OnCli
     Handler handler = new Handler(){
         public void handleMessage(Message m){
             Intent intent = new Intent(ActivityUploadPhoto.this, ActivityModeGallery.class);
+            finish();
             startActivity(intent); // starts gallery activity when done uploading on a backgroung thread
         }
     };

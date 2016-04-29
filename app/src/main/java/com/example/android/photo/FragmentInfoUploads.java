@@ -37,7 +37,7 @@ public class FragmentInfoUploads extends Fragment {
 // ********** UTILS **********
 //////////////////////////////
         update = new Bitmap[maxPhotos];
-        update = model.getBitmapsUpload();
+        update = model.getSmallBitmapsUpload();
         updateRatings = new float[maxPhotos];
         updateRatings = model.getPictureRatingsUpload();
         updateNames = new String[maxPhotos];

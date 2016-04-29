@@ -71,7 +71,6 @@ public class PhotoModel {
     for (int i = 0; i < maxPhotos; i++) {ratings[i] = photosByRating[i].getPictureRating();}
     return ratings;
 }
-
 // returns names of all uploaded pictures in order based on rating
     public String[] getPictureNamesRatings() {
         for (int i = 0; i < maxPhotos; i++) {photosByRating[i] = myPhotos[indexes[i]];}
@@ -85,6 +84,14 @@ public class PhotoModel {
         for (int i = 0; i < maxPhotos; i++) {photosByRating[i] = myPhotos[indexes[i]];}
         Bitmap [] images = new Bitmap[maxPhotos];
         for (int i = 0; i < maxPhotos; i++) {images[i] = photosByRating[i].getPictureBit();}
+        return images;
+    }
+
+// returns downsized bitmaps of all uploaded pictures in order based on rating
+    public Bitmap[] getSmallBitmapsRating() {
+        for (int i = 0; i < maxPhotos; i++) {photosByRating[i] = myPhotos[indexes[i]];}
+        Bitmap [] images = new Bitmap[maxPhotos];
+        for (int i = 0; i < maxPhotos; i++) {images[i] = photosByRating[i].getSmallPictureBit();}
         return images;
     }
 
@@ -109,6 +116,13 @@ public class PhotoModel {
             Bitmap[] images = new Bitmap[maxPhotos];
             for (int i = 0; i < maxPhotos; i++) {images[i] = myPhotos[i].getPictureBit();}
             return images;
+    }
+
+// returns downsized bitmaps of all uploaded pictures in order based on upload time
+    public Bitmap[] getSmallBitmapsUpload() {
+        Bitmap[] images = new Bitmap[maxPhotos];
+        for (int i = 0; i < maxPhotos; i++) {images[i] = myPhotos[i].getSmallPictureBit();}
+        return images;
     }
 
 // ********** RESET **********

@@ -10,6 +10,7 @@ public class PhotoInfo {
 
 // ********** PHOTO INFORMATION **********
     private Bitmap pictureBit; // picture saved as a bitmap
+    private Bitmap smallPictureBit; // downsized bitmap for the picture
     private String imageName; // name of the picture
     float rating; // overall rating of the picture
     int givenRatings; // how many ratings were given to the image (how many times rated)
@@ -23,19 +24,23 @@ public class PhotoInfo {
 
     public PhotoInfo (Bitmap btm, String imageName) {
         this.imageName = imageName;
-        pictureBit = btm;
+        pictureBit = scaleBitmap(btm, 500, 500);;
         rating = 0;
         givenRatings = 0;
+        smallPictureBit = scaleBitmap(btm, 380, 380);
     }
 
     public PhotoInfo (Bitmap btm) {
-        pictureBit = btm;
+        pictureBit = scaleBitmap(btm, 500, 500);
         rating = 0;
         givenRatings = 0;
+        smallPictureBit = scaleBitmap(btm, 380, 380);
     }
 
 // ********** GETTERS & SETTERS **********
     public Bitmap getPictureBit() {return pictureBit;}
+
+    public Bitmap getSmallPictureBit() {return smallPictureBit;}
 
     public String getPictureName() {return imageName;}
 
@@ -47,6 +52,31 @@ public class PhotoInfo {
         givenRatings ++;
         rating = rating + newRating;
         rating = rating / givenRatings;
+    }
+
+    private Bitmap scaleBitmap(Bitmap bm, int maxHeight, int maxWidth) {
+        int width = bm.getWidth();
+        int height = bm.getHeight();
+
+
+        if (width > height) {
+            // landscape
+            float ratio = (float) width / maxWidth;
+            width = maxWidth;
+            height = (int)(height / ratio);
+        } else if (height > width) {
+            // portrait
+            float ratio = (float) height / maxHeight;
+            height = maxHeight;
+            width = (int)(width / ratio);
+        } else {
+            // square
+            height = maxHeight;
+            width = maxWidth;
+        }
+
+        bm = Bitmap.createScaledBitmap(bm, width, height, true);
+        return bm;
     }
 
 }

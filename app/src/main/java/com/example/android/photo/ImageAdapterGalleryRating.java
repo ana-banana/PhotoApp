@@ -28,7 +28,7 @@ public class ImageAdapterGalleryRating extends BaseAdapter {
         mContext = c;
         max = model.maxPhotos; // max number as set in model
         mThumbIds = new Bitmap[max];
-        Bitmap[] update = model.getBitmapsRating(); // get bitmaps from the model
+        Bitmap[] update = model.getSmallBitmapsRating(); // get bitmaps from the model
         for (int i = 0; i < max; i++) {
             mThumbIds[i] = update[i];
         }
@@ -36,7 +36,7 @@ public class ImageAdapterGalleryRating extends BaseAdapter {
 
 // update array of bitmaps when something was changed (called from outside)
     public void updateBitmaps(PhotoModel model) {
-        Bitmap[] update = model.getBitmapsRating();
+        Bitmap[] update = model.getSmallBitmapsRating();
         for (int i = 0; i < max; i++) {
             mThumbIds[i] = update[i];
         }
@@ -60,7 +60,7 @@ public class ImageAdapterGalleryRating extends BaseAdapter {
         if (convertView == null) {
             imageView = new ImageView(mContext);
             imageView.setLayoutParams(new GridView.LayoutParams(380, 380));
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
             imageView.setPadding(5, 5, 5, 5);
         } else {
             imageView = (ImageView) convertView;
