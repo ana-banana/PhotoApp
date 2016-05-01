@@ -23,8 +23,8 @@ public class FragmentGalleryUploads extends Fragment implements AdapterView.OnIt
         model = PhotoModel.getInstance();
         View rootView = inflater.inflate(R.layout.fragment_gallery_uploads, container, false);
         GridView gridView = (GridView) rootView.findViewById(R.id.fragment_gallery_uploads_gridView); // grid view with photos
-        ImageAdapterGalleryUpload currentState = ImageAdapterGalleryUpload.getInstance(getActivity().getApplicationContext(), model);
-        currentState.updateBitmaps(model);
+        ImageAdapterGalleryUpload currentState = ImageAdapterGalleryUpload.getInstance(getActivity().getApplicationContext());
+        currentState.updateBitmaps();
         gridView.setAdapter(currentState);
         gridView.setOnItemClickListener(this);
         return rootView;

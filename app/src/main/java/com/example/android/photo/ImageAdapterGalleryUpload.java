@@ -11,21 +11,23 @@ import android.widget.ImageView;
 // Adapter for the grid view in the gallery displaying photos in order based on images upload time
 
 public class ImageAdapterGalleryUpload extends BaseAdapter {
-    private static int max;  // max number of photos
+    private final int max;  // max number of photos
     private Context mContext;
     private static ImageAdapterGalleryUpload mInstance;
     private Bitmap[] mThumbIds; // bitmaps to display
 
-    public static ImageAdapterGalleryUpload getInstance(Context c, PhotoModel model) {
+    // should always be called with context getActivity().getApplicationContext() from FragmentGalleryUploads
+    public static ImageAdapterGalleryUpload getInstance(Context c) {
         if (mInstance != null) {
             return mInstance;
         } else {
-            mInstance = new ImageAdapterGalleryUpload(c, model);
+            mInstance = new ImageAdapterGalleryUpload(c);
             return mInstance;
         }
     }
 
-    public ImageAdapterGalleryUpload(Context c, PhotoModel model) {
+    public ImageAdapterGalleryUpload(Context c) {
+        PhotoModel model = PhotoModel.getInstance();
         mContext = c;
         max = model.maxPhotos; // as set in the model
         mThumbIds = new Bitmap[max];
@@ -36,7 +38,8 @@ public class ImageAdapterGalleryUpload extends BaseAdapter {
     }
 
 // update array of bitmaps when something was changed (called from outside)
-    public void updateBitmaps(PhotoModel model) {
+    public void updateBitmaps() {
+        PhotoModel model = PhotoModel.getInstance();
         Bitmap[] update = model.getSmallBitmapsUpload();
         for (int i = 0; i < max; i++) {
             mThumbIds[i] = update[i];

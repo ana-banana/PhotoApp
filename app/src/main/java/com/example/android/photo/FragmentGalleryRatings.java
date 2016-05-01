@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 public class FragmentGalleryRatings extends Fragment implements AdapterView.OnItemClickListener {
 
-    PhotoModel model; // stores an instance of PhotoModel with all uploaded images information
+    private PhotoModel model; // stores an instance of PhotoModel with all uploaded images information
 
     @Nullable
     @Override
@@ -24,8 +24,9 @@ public class FragmentGalleryRatings extends Fragment implements AdapterView.OnIt
         model = PhotoModel.getInstance();
         View rootView = inflater.inflate(R.layout.fragment_gallery_ratings, container, false);
         GridView gridView = (GridView) rootView.findViewById(R.id.fragment_gallery_ratings_gridView); // grid view with photos
-        ImageAdapterGalleryRating currentState = ImageAdapterGalleryRating.getInstance(getActivity().getApplicationContext(), model);
-        currentState.updateBitmaps(model);
+        //ImageAdapterGalleryRating currentState = ImageAdapterGalleryRating.getInstance(getActivity().getApplicationContext(), model);
+        ImageAdapterGalleryRating currentState = ImageAdapterGalleryRating.getInstance(getActivity().getApplicationContext());
+        currentState.updateBitmaps();
         gridView.setAdapter(currentState);
         gridView.setOnItemClickListener(this);
         return rootView;

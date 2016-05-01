@@ -10,33 +10,36 @@ import android.widget.ImageView;
 // Adapter for the grid view in the gallery displaying photos in order based on images ratings
 
 public class ImageAdapterGalleryRating extends BaseAdapter {
-    private static int max; // max number of photos
+    private final int max; // max number of photos
     private Context mContext;
     private static ImageAdapterGalleryRating mInstance;
     private Bitmap[] mThumbIds; // bitmaps to display
 
-    public static ImageAdapterGalleryRating getInstance(Context c, PhotoModel model) {
+    // should always be called with context getActivity().getApplicationContext() from FragmentGalleryRatings
+    public static ImageAdapterGalleryRating getInstance(Context c) {
         if (mInstance != null) {
             return mInstance;
         } else {
-            mInstance = new ImageAdapterGalleryRating(c, model);
+            mInstance = new ImageAdapterGalleryRating(c);
             return mInstance;
         }
     }
 
-    public ImageAdapterGalleryRating(Context c, PhotoModel model) {
+    public ImageAdapterGalleryRating(Context c) {
         mContext = c;
-        max = model.maxPhotos; // max number as set in model
+        PhotoModel myModel = PhotoModel.getInstance();
+        max = myModel.maxPhotos; // max number as set in model
         mThumbIds = new Bitmap[max];
-        Bitmap[] update = model.getSmallBitmapsRating(); // get bitmaps from the model
+        Bitmap[] update = myModel.getSmallBitmapsRating(); // get bitmaps from the model
         for (int i = 0; i < max; i++) {
             mThumbIds[i] = update[i];
         }
     }
 
 // update array of bitmaps when something was changed (called from outside)
-    public void updateBitmaps(PhotoModel model) {
-        Bitmap[] update = model.getSmallBitmapsRating();
+    public void updateBitmaps() {
+        PhotoModel myModel = PhotoModel.getInstance();
+        Bitmap[] update = myModel.getSmallBitmapsRating();
         for (int i = 0; i < max; i++) {
             mThumbIds[i] = update[i];
         }

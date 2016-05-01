@@ -23,24 +23,24 @@ public class ActivityManageProfile extends AppCompatActivity {
     private static final int RESULT_LOAD_IMAGE = 1; // stores chosen photo
 
 // ********** BUTTONS FOR the ACTION BAR **********
-    ImageButton addNewPhotoButton; // Button to add new photos, launches ActivityUploadPhoto
-    ImageButton galleryModeButton; // Button to switch to Gallery mode, launches ActivityModelGallery
+    private ImageButton addNewPhotoButton; // Button to add new photos, launches ActivityUploadPhoto
+    private ImageButton galleryModeButton; // Button to switch to Gallery mode, launches ActivityModelGallery
     //ImageButton infoModeButton; // Button to switch to Information mode, launches ActivityModelInfo
-    ImageButton settingsButton; // Button to switch to ActivitySettings
-    ImageButton toProfileButton; // Button to switch to user's profile
+    private ImageButton settingsButton; // Button to switch to ActivitySettings
+    private ImageButton toProfileButton; // Button to switch to user's profile
 
 // ********** VIEWS FROM LAYOUT & RELATED **********
-    ImageButton save; // pressing this button saves the changes
-    ImageView manageProfPic; // shows first the current user picture. By pressing it user can upload new picture
-    EditText manageName; // shows first the current name as a hint. When text is changed saves it into newName
-    TextView notification; // appears when changes have been saved
+    private ImageButton save; // pressing this button saves the changes
+    private ImageView manageProfPic; // shows first the current user picture. By pressing it user can upload new picture
+    private EditText manageName; // shows first the current name as a hint. When text is changed saves it into newName
+    private TextView notification; // appears when changes have been saved
     boolean changedPicture = false; // sets to true if new picture was uploaded
     boolean changedName = false; // sets to true if name was changed
-    Bitmap newPicture; // stores new uploaded picture
-    String newName; // stores new profile name
+    private Bitmap newPicture; // stores new uploaded picture
+    private String newName; // stores new profile name
 
 // ********** REUSABLE **********
-    ProfileModel profile; // an instance of a profile model
+    private ProfileModel profile; // an instance of a profile model
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
